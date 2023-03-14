@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="isTablet">false</bool>
+    <color name="blue">#009EE5</color>
+    <color name="bluedark">#004481</color>
+    <color name="bluish">#2079c1</color>
+    <color name="bluish_two">#287bba</color>
+    <color name="darker_blue">#006EC1</color>
+    <color name="grey">#999999</color>
+    <color name="light_blue_bbva">#028BED</color>
+    <color name="noir_dialog">#4a4a4a</color>
+    <color name="panic_form_background">#fee5ab</color>
+    <color name="white">#ffffff</color>
+    <string name="alert_ErrorConnection">NOT CONNECTED</string>
+    <string name="alert_ErrorConnectionMessage">No connections are available.\nPlease check your Internet connection and try again.</string>
+    <string name="alert_ErrorSignin">NOT ACCESS</string>
+    <string name="alert_ErrorSigninMessage">There was an error during validation process.</string>
+    <string name="alert_aceptar">Accept</string>
+    <string name="alert_cancelar">Cancel</string>
+    <string name="alert_no">NO</string>
+    <string name="alert_si">YES</string>
+    <string name="btn_login">Enter</string>
+    <string name="content_description_bar_img">Bar Image</string>
+    <string name="content_description_bbva_logo">BBVA Logo</string>
+    <string name="content_description_wave_img">Wave Animation</string>
+    <string name="update_downloaded">An update has just been downloaded.</string>
+    <string name="update_restart">RESTART</string>
+    <style name="AlertDialogBlue" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/light_blue_bbva</item>
+        <item name="android:textColorPrimary">@color/noir_dialog</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <style name="LibraryTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/light_blue_bbva</item>
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/white</item>-->
+    </style>
+    <style name="LibraryTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="boton_form">
+        <item name="android:background">@color/bluedark</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">15sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+    <style name="loginField">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+</resources>

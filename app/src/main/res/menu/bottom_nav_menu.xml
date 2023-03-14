@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ic_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/ic_new_trip"
+        android:icon="@drawable/ic_plus"
+        android:title="@string/new_trip" />
+
+    <item
+        android:id="@+id/ic_comparative"
+        android:icon="@drawable/ic_chart"
+        android:title="@string/comparative" />
+
+    <item
+        android:id="@+id/ic_record"
+        android:icon="@drawable/ic_record"
+        android:title="@string/record" />
+
+    <item
+        android:id="@+id/ic_more"
+        android:icon="@drawable/ic_more"
+        android:title="@string/more" />
+
+</menu>

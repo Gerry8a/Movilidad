@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/LibraryTheme"
+    android:id="@+id/contentLogin"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingTop="100dp"
+        >
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:src="@drawable/logo"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            />
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Application"
+            android:textColor="@color/blue"
+            android:textSize="40sp"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnSignin"
+        style="@style/boton_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:textSize="36sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/btn_login"
+        android:layout_gravity="center_horizontal|center_vertical|bottom"
+        />
+
+</LinearLayout>

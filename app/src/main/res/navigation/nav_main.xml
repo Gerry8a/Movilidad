@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/comparativeFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.ComparativeFragment"
+        android:label="fragment_comparative"
+        tools:layout="@layout/fragment_comparative" >
+        <action
+            android:id="@+id/action_comparativeFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.ItemFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" >
+        <action
+            android:id="@+id/action_itemFragment_to_moreFragment"
+            app:destination="@id/moreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTripFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.NewTripFragment"
+        android:label="fragment_new_trip"
+        tools:layout="@layout/fragment_new_trip" >
+        <action
+            android:id="@+id/action_newTripFragment_to_comparativeFragment"
+            app:destination="@id/comparativeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.MoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment2_to_newTripFragment"
+            app:destination="@id/newTripFragment" />
+    </fragment>
+</navigation>

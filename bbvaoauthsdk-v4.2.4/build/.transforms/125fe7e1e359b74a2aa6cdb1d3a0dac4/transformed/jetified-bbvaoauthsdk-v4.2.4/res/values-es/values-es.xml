@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alert_ErrorConnection">SIN CONEXIÓN</string>
+    <string name="alert_ErrorConnectionMessage">La conexión de red no está disponible.\nPor favor, compruebe la conexión a internet y vuelva a intentarlo.</string>
+    <string name="alert_ErrorSignin">ERROR ACCESO</string>
+    <string name="alert_ErrorSigninMessage">Se producido un error durante el proceso de autenticación.</string>
+    <string name="alert_aceptar">Aceptar</string>
+    <string name="alert_cancelar">Cancelar</string>
+    <string name="alert_no">NO</string>
+    <string name="alert_si">SÍ</string>
+    <string name="btn_login">Entrar</string>
+    <string name="content_description_bar_img">Bar Image</string>
+    <string name="content_description_bbva_logo">BBVA Logo</string>
+    <string name="content_description_wave_img">Wave Animation</string>
+    <string name="update_downloaded">La actualización ha sido descargada.</string>
+    <string name="update_restart">RESTART</string>
+</resources>

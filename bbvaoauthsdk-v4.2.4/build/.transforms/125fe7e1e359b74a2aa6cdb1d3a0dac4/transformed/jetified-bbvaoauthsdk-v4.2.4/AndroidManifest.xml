@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bbva.login"
+    android:versionCode="424"
+    android:versionName="4.2.4" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="28" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:hardwareAccelerated="true" >
+        <activity
+            android:name="com.bbva.login.LoginActivity"
+            android:theme="@style/LibraryTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.bbva.login.InternalAnimation"
+            android:noHistory="true"
+            android:theme="@style/LibraryTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- Firebase messaging -->
+        <!-- FirebaseInstanceIdService performs security checks at runtime, no need for explicit permissions despite exported="true" -->
+        <!--
+        <service android:name="com.bbva.message.MessageFirebaseInstanceIDService" android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>  Deprecated overriding onNewToken in FirebaseMessagingService
+        -->
+        <!--
+        <service
+            android:name="com.bbva.internal.mobile.example.MessageFirebaseReceiverService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        -->
+        <!--
+       No manifest Lib en manifest de app
+       <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />   FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        -->
+    </application>
+
+</manifest>
