@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BBVA Movilidad</string>
+    <string name="app_name">Movilidad</string>
     <string name="title_activity_maps">MapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -23,7 +23,11 @@
         <item>Parques Polanco</item>
     </string-array>
 
+    <!-- onboarding -->
     <string name="co">CO<small>2</small></string>
-    <string name="welcome">Bienvenido</string>
+    <string name="welcome">Bienvenido a mi Huella CO<small>2</small></string>
     <string name="welcome_text">Un programa que apoya la movilidad sostenible y a medir las emisiones de carbono CO<small>2</small> de los colaboradores en BBVA al transportarse a sus sedes</string>
+    <string name="second_title">¿Por qué medir las emisiones de CO<small>2e</small>?</string>
+    <string name="second_text">Queremos compartir el nivel de CO<small>2e</small> que genera cada medio de transporte. Con tu registro ayudamos a medir nuestro impacto en el planeta </string>
+
 </resources>

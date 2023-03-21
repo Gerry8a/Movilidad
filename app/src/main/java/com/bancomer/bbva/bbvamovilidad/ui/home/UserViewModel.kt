@@ -8,6 +8,10 @@ import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.DataX
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.repository.CatalogRepository
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO_ID
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TORRE_BBVA
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TORRE_BBVA_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,10 +24,13 @@ class UserViewModel @Inject constructor(
     private val _status = MutableLiveData<ApiResponseStatus<Any>>()
     val status: LiveData<ApiResponseStatus<Any>> get() = _status
 
+    private lateinit var userM: String
+
 
     init {
-        getListUser()
-        registerList()
+//        downloadCatalog()
+//        getListUser()
+//        registerList()
     }
 
     private fun registerList() {
@@ -33,22 +40,42 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    private fun updateWorkCenter(campus: Int){
+        viewModelScope.launch {
+            _status.value = ApiResponseStatus.Loading()
+            val userEntity = repository.getUserFromDB()
+            userM = userEntity.userm!!
+            handleResponseStatus(repository.updateCampus(campus, userM))
+        }
+    }
+
+    /**
+     * Función que guarda el usuario en el base de datos
+     */
+    // TODO: Agregar un UIState
     fun insertUser(mail: String) {
         viewModelScope.launch {
             repository.getUserInfo(mail).let {
                 when(it){
-                    is ApiResponseStatus.Error -> TODO()
-                    is ApiResponseStatus.Loading -> TODO()
+                    is ApiResponseStatus.Error -> {
+
+                    }
+                    is ApiResponseStatus.Loading -> {
+
+                    }
                     is ApiResponseStatus.Success -> {
                         val response = it.data.data
-                        val ttt = saveUserInfo(response)
-                        repository.insertUser(ttt)
+                        val user = saveUserInfo(response)
+                        repository.insertUser(user)
                     }
                 }
             }
         }
     }
 
+    /**
+     * Función que recupera el response y lo convierte en una entity
+     */
     private fun saveUserInfo(response: DataX): UserEntity {
         val userEntity = UserEntity()
         userEntity.nombres = response.nombres
@@ -73,6 +100,12 @@ class UserViewModel @Inject constructor(
 
     private fun handleResponseStatus(apiResponseStatus: ApiResponseStatus<Any>) {
         _status.value = apiResponseStatus
+    }
 
+    fun getWorkCode(workCenter: String) {
+        when(workCenter){
+            TORRE_BBVA -> {updateWorkCenter(TORRE_BBVA_ID)}
+            PARQUES_POLANCO -> {updateWorkCenter(PARQUES_POLANCO_ID)}
+        }
     }
 }

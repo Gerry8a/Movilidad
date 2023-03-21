@@ -38,12 +38,12 @@ class CatalogViewModel @Inject constructor(
 
     fun downloadCatalog(){
         viewModelScope.launch {
-            _status.value = com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Loading()
+            _status.value = ApiResponseStatus.Loading()
             handlerResponseStatus(catalogRepository.downloadCatalog())
         }
     }
 
-    private fun handlerResponseStatus(apiResponseStatus: com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<Data>) {
+    private fun handlerResponseStatus(apiResponseStatus: ApiResponseStatus<Data>) {
         if (apiResponseStatus is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Success){
             _catalog.value = apiResponseStatus.data!!
         }
@@ -51,8 +51,8 @@ class CatalogViewModel @Inject constructor(
 
     }
 
-    private fun ggg(apiResponseStatus: com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<List<Movie>>) {
-        if (apiResponseStatus is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Success){
+    private fun ggg(apiResponseStatus: ApiResponseStatus<List<Movie>>) {
+        if (apiResponseStatus is ApiResponseStatus.Success){
             _movie.value = apiResponseStatus.data!!
         }
 //        _status.value = apiResponseStatus

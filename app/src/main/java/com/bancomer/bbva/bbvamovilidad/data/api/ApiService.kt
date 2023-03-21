@@ -2,7 +2,8 @@ package com.bancomer.bbva.bbvamovilidad.data.api
 
 import com.bancomer.bbva.bbvamovilidad.data.api.movieResponse.MovieResponse
 import com.bancomer.bbva.bbvamovilidad.data.api.request.CarbonPrintRequest
-import com.bancomer.bbva.bbvamovilidad.data.api.response.CatalogsResponse
+import com.bancomer.bbva.bbvamovilidad.data.api.request.UserUpdateWorkCenter
+import com.bancomer.bbva.bbvamovilidad.data.api.response.CatalogResponse
 import com.bancomer.bbva.bbvamovilidad.data.api.response.UserInfo
 import com.bancomer.bbva.bbvamovilidad.data.api.response.UserInfoResponse
 import com.bancomer.bbva.bbvamovilidad.data.api.response.UserList
@@ -11,6 +12,7 @@ import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.GET_CATALOGS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.GET_INFO_BY_USER
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.LIST_TAB_CARBON_PRINT_COLAB
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.REGISTER_CARBON_PRINT_COLAB
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.UPDATE_WORK_CENTER
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -82,10 +84,10 @@ private val retrofit = Retrofit.Builder()
 
 interface ApiService {
     @GET(GET_CATALOGS)
-    suspend fun getCatalogs(): CatalogsResponse
+    suspend fun getCatalogs(): CatalogResponse
 
-    @GET(GET_CATALOGS)
-    suspend fun catalogo(): CatalogsResponse
+    @POST(UPDATE_WORK_CENTER)
+    suspend fun updateWorkCenter(@Body user: UserUpdateWorkCenter): Any
 
 
     @POST(GET_INFO_BY_USER)
@@ -127,12 +129,12 @@ interface ApiService {
 
 
     @GET("movsostenible/movil/getMovilCatalogs")
-    suspend fun getCatalogos(): CatalogsResponse
+    suspend fun getCatalogos(): CatalogResponse
 
     @GET("mov-sostenible/s/movsostenible/movil/getMovilCatalogs")
-    suspend fun getMine(): CatalogsResponse
+    suspend fun getMine(): CatalogResponse
 
-    suspend fun getVic(): CatalogsResponse
+    suspend fun getVic(): CatalogResponse
 
 
 

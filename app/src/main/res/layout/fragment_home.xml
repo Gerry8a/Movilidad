@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bbvaLightAqua"
     tools:context=".ui.home.HomeFragment">
 
 
@@ -128,30 +129,6 @@
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="@+id/textView4"
             app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/tvToken"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-            app:layout_constraintVertical_bias="0.13999999"
-            tools:layout_editor_absoluteX="8dp" />
-
-        <TextView
-            android:id="@+id/tvToken"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:text="@string/hello_blank_fragment"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvResult" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

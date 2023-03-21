@@ -11,6 +11,8 @@
     <color name="ultraLightBlue">#FF52BCEC</color>
     <color name="colorAccent">@color/ultraLightBlue</color>
 
+    <color name="red">#ED122C</color>
+
     <color name="bbvaNavy">#072146</color>
     <color name="bbvaCoreDarkBlue">#043263</color>
     <color name="bbvaCoreBlue">#004481</color>

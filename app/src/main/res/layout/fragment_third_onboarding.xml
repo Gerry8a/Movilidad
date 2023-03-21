@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.onboarding.ThirdOnboardingFragment">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -12,21 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="@string/campus"
+        android:background="@color/bbvaCoreBlue"
+        app:boxBackgroundColor="@color/bbvaCoreBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/ic_place">
+        app:layout_constraintTop_toTopOf="parent">
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
+            android:popupTheme="@style/PopUpMenuStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/bbvaCoreBlue"
+            android:fontFamily="@font/benton_sans_bbva_bold"
             android:inputType="none"
-            android:text="Torre BBVA" />
+            android:text="Torre BBVA"
+            android:textColor="@color/white" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -35,10 +40,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textColor="@color/bluedark"
         android:layout_marginBottom="50dp"
+        android:fontFamily="@font/benton_sans_bbva_bold"
         android:text="@string/select_your_campus"
+        android:textColor="@color/bluedark"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/tpSelectPlace"
         app:layout_constraintEnd_toEndOf="@+id/tpSelectPlace"
         app:layout_constraintStart_toStartOf="@+id/tpSelectPlace" />
@@ -50,8 +56,24 @@
         android:layout_height="60dp"
         android:backgroundTint="@color/bbvaCoreBlue"
         android:text="Comenzar"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,63 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bbvaDarkAqua"
     tools:context=".ui.onboarding.FirstOnboardingFragment">
-
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/bluedark"
         android:layout_margin="8dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/benton_sans_bbva_medium"
+        android:gravity="center"
         android:lines="2"
-        android:text="@string/co"
-        android:textSize="30sp"
+        android:padding="10dp"
+        android:text="@string/welcome"
+        android:textColor="@color/white"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/leaves"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/leaf_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="68dp"
+        android:fontFamily="@font/benton_sans_bbva_medium"
         android:gravity="center"
+        android:padding="10dp"
         android:text="@string/welcome_text"
+        android:textColor="@color/white"
         android:textSize="25sp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintVertical_bias="0.100000024" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="255dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/bbvaCoreBlue"
-        android:text="Siguiente"
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pager_onboarding_one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".90" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

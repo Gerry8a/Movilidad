@@ -34,17 +34,18 @@ class ComparativeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnRestartOnboarding.setOnClickListener {
-            preferences.save(Dictionary.ONBOARDING_FINISHED, false)
+            preferences.save(Dictionary.ONBOARDING_FINISHED, true)
+            activity?.finish()
         }
         
         viewmodel.getUserInfo("XMF0673")
         
         viewmodel.status.observe(requireActivity()){
             when(it){
-                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Error -> Log.d(TAG, "onViewCreated: Error")
-                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Loading -> Log.d(TAG, "onViewCreated: LOADING")
+                is ApiResponseStatus.Error -> Log.d(TAG, "onViewCreated: Error")
+                is ApiResponseStatus.Loading -> Log.d(TAG, "onViewCreated: LOADING")
                 
-                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Success -> Log.d(TAG, "onViewCreated: SUCCESS")
+                is ApiResponseStatus.Success -> Log.d(TAG, "onViewCreated: SUCCESS")
             }
         }        
         

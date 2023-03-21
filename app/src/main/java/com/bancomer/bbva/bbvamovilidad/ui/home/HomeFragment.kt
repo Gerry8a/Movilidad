@@ -15,6 +15,7 @@ import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiServiceInterceptor
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentHomeBinding
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.bbva.login.ErrorCode
 import com.bbva.login.OAuthManager
 import com.google.gson.GsonBuilder
@@ -90,14 +91,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        viewModel.catalog.observe(requireActivity()) {
-            binding.tvResult.text = it.version
-        }
-
-        viewModel.movie.observe(requireActivity()){
-            binding.tvToken.text = it.get(0).title
-        }
-
     }
 
     override fun onResume() {
@@ -115,6 +108,7 @@ class HomeFragment : Fragment() {
 //                    val accessToken = "Bearer $token"
 //                    ApiServiceInterceptor.setSessionToken(token)
                     ApiServiceInterceptor.setSessionToken(token)
+                    Log.d(TAG, "onAccessTokenSuccess: $token")
                     viewModel.downloadCatalog()
 
                 }
@@ -123,10 +117,8 @@ class HomeFragment : Fragment() {
                         OAuthManager.getInstance().getUser(context)
                     )
                 )
-//                ApiServiceInterceptor.setSessionToken(token)
-                lifecycleScope.launch(Dispatchers.Main) {
-                    binding.tvToken.text = token
-                }
+                ApiServiceInterceptor.setSessionToken(token)
+              
                 val user = gson.toJson(
                     OAuthManager.getInstance().getUser(context)
                 )
@@ -139,12 +131,11 @@ class HomeFragment : Fragment() {
                 // Actualizar datos Tabs
                 observableData.setAccesstoken("Error OAuth: $errorCode $errorMessage")
                 observableData.setUserLogin("")
-                binding.tvToken.text = errorMessage
+                Log.d(TAG, "onAccessTokenError: $errorMessage")
             }
         })
 
     }
-
 
 
     fun OAuthErrorHandler(errorCode: Int, errorMsg: String) {

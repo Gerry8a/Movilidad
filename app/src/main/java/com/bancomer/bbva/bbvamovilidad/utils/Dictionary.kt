@@ -27,12 +27,20 @@ object Dictionary {
     const val GET_INFO_BY_USER = "v1/movil/getInfoByUser"
     const val REGISTER_CARBON_PRINT_COLAB = "v1/movil/registerCarbonPrintColab"
     const val LIST_TAB_CARBON_PRINT_COLAB = "v1/movil/listTabCarbonPrintColab"
+    const val UPDATE_WORK_CENTER = "v1/movil/updateUserWorkCenter"
+
+    //WorkCenter
+    const val TORRE_BBVA = "Torre BBVA"
+    const val PARQUES_POLANCO = "Parques Polanco"
+    const val TORRE_BBVA_ID = 29803
+    const val PARQUES_POLANCO_ID = 29804
 
     //UserM
     const val USER_MINE = "XMF0684"
     const val USER_GERA = "XMF0673"
 
     //ROOM TABLES
+    const val CAMPUS_TABLE = "campus_table"
     const val USER_TABLE = "user_table"
     const val USER_DATABASE = "user_database.db"
 

@@ -6,6 +6,7 @@ import com.bancomer.bbva.bbvamovilidad.data.api.CatalogApi.retrofitService
 import com.bancomer.bbva.bbvamovilidad.data.api.dto.MovieDTOMapper
 import com.bancomer.bbva.bbvamovilidad.data.api.request.CarbonPrintRequest
 import com.bancomer.bbva.bbvamovilidad.data.api.request.Detalle
+import com.bancomer.bbva.bbvamovilidad.data.api.request.UserUpdateWorkCenter
 import com.bancomer.bbva.bbvamovilidad.data.api.response.*
 import com.bancomer.bbva.bbvamovilidad.data.local.dao.UserDao
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
@@ -19,9 +20,15 @@ class CatalogRepository @Inject constructor(
     private val userDao: UserDao
 ) {
 
-    suspend fun insertUser(userEntity: UserEntity) =
-        userDao.insertUser(userEntity)
+    suspend fun insertUser(userEntity: UserEntity) = userDao.insertUser(userEntity)
 
+    suspend fun getUserFromDB(): UserEntity = userDao.getUSerInfo()
+
+    suspend fun updateCampus(workCenterID: Int, userM: String): ApiResponseStatus<Any> =
+        makeNetworkcall {
+            val user = UserUpdateWorkCenter(userM, "", workCenterID)
+            val request = retrofitService.updateWorkCenter(user)
+        }
 
 
     suspend fun downloadCatalog(): ApiResponseStatus<Data> =
