@@ -25,7 +25,6 @@ class MainActivity : BaseActivity() {
 
     }
     private fun setUpNavigation() {
-
         supportActionBar?.hide()
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         binding.bottomNavigation.setupWithNavController(navController)
@@ -51,11 +50,11 @@ class MainActivity : BaseActivity() {
                     navController.navigate(R.id.itemFragment)
                     true
                 }
-                R.id.ic_more ->{
-                    navController.popBackStack()
-                    navController.navigate(R.id.moreFragment)
-                    true
-                }
+//                R.id.ic_more ->{
+//                    navController.popBackStack()
+//                    navController.navigate(R.id.moreFragment)
+//                    true
+//                }
                 else -> {false}
             }
         }

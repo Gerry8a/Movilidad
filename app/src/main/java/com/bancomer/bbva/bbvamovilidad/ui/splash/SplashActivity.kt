@@ -30,12 +30,12 @@ class SplashActivity : BaseActivity() {
 
         Thread.sleep(2000)
         if (!onboardingFinished) {
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
+            val intent = Intent(this@SplashActivity, OnboardingActivity::class.java)
             startActivity(intent)
             screenSplash.setKeepOnScreenCondition { false }
             finish()
         } else {
-            val intent = Intent(this@SplashActivity, OnboardingActivity::class.java)
+            val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
             screenSplash.setKeepOnScreenCondition { false }
             finish()

@@ -29,5 +29,15 @@
     <string name="welcome_text">Un programa que apoya la movilidad sostenible y a medir las emisiones de carbono CO<small>2</small> de los colaboradores en BBVA al transportarse a sus sedes</string>
     <string name="second_title">¿Por qué medir las emisiones de CO<small>2e</small>?</string>
     <string name="second_text">Queremos compartir el nivel de CO<small>2e</small> que genera cada medio de transporte. Con tu registro ayudamos a medir nuestro impacto en el planeta </string>
+    <string name="autorizar">Autorizar</string>
+    <string name="thirth_title">Al reducir tus emisiones de carbono, ganas</string>
+    <string name="thirth_text">Entre más viajes registres y cambies a modos menos contaminantes, podrás acumular mayor cantidad de puntos</string>
 
+    <!--alert -->
+    <string name="alert_gps_text_two">\"Autorizo el acceso a la ubicación de mi dispositivo durante el uso de la aplicación en términos del Aviso de Privacidad\"</string>
+    <string name="alert_gps_text_one">Para calcilar los km recorridos de tu ruta se requiere validar tu ubicación</string>
+    <string name="alert_title_gps">Permisos de activación GPS</string>
+    <string name="home_text">Entre más recorridos agregues a tu sede, más puntos podrás ganar. \n \n \n  Recuerda que si optas por medios de transporte más sustentables, generas menos CO2e y por lo tanto podrás ganar más puntos. \n \n \n Si ocupas más de un transporte, asegúrate de agregarlo en el momento para que la medición de emisiones y puntos sea más certera.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="notice_privacy">Ver aviso de privacidad</string>
 </resources>

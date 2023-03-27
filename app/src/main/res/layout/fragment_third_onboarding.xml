@@ -23,13 +23,13 @@
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
-            android:popupTheme="@style/PopUpMenuStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/bbvaCoreBlue"
             android:fontFamily="@font/benton_sans_bbva_bold"
             android:inputType="none"
+            android:popupTheme="@style/PopUpMenuStyle"
             android:text="Torre BBVA"
             android:textColor="@color/white" />
 
@@ -54,9 +54,9 @@
         android:id="@+id/button"
         android:layout_width="255dp"
         android:layout_height="60dp"
-        android:backgroundTint="@color/bbvaCoreBlue"
         android:text="Comenzar"
         android:textColor="@color/white"
+        android:theme="@style/BBVAButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

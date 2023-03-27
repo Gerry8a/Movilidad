@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bbvaDarkAqua"
-    tools:context=".ui.onboarding.FirstOnboardingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.onboarding.FourthOnboardingFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -17,7 +17,7 @@
         android:gravity="center"
         android:lines="2"
         android:padding="10dp"
-        android:text="@string/welcome"
+        android:text="@string/thirth_title"
         android:textColor="@color/white"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:id="@+id/imageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/leaf_icon"
+        android:src="@drawable/car_plus_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -43,7 +43,7 @@
         android:fontFamily="@font/benton_sans_bbva_bold"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/welcome_text"
+        android:text="@string/thirth_text"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/pager_onboarding_one"
+        android:src="@drawable/page_onboarding_three"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

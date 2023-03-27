@@ -21,9 +21,9 @@
         android:icon="@drawable/ic_record"
         android:title="@string/record" />
 
-    <item
-        android:id="@+id/ic_more"
-        android:icon="@drawable/ic_more"
-        android:title="@string/more" />
+<!--    <item-->
+<!--        android:id="@+id/ic_more"-->
+<!--        android:icon="@drawable/ic_more"-->
+<!--        android:title="@string/more" />-->
 
 </menu>

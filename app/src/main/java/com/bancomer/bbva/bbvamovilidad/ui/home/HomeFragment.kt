@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 //        ApiServiceInterceptor.("72e2e780397bdc9eedd34c1c78c38ccd")
-        buildObservers()
+//        buildObservers()
         initView()
 
 //        viewModel.movie.observe(requireActivity()) {

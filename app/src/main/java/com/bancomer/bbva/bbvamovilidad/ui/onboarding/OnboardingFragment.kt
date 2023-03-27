@@ -40,6 +40,7 @@ class OnboardingFragment : Fragment() {
         val fragmentList = arrayListOf<Fragment>(
             FirstOnboardingFragment(),
             SecondOnboardingFragment(),
+            FourthOnboardingFragment(),
             ThirdOnboardingFragment()
         )
 

@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey_dialog_text">#666666</color>
+    <color name="grey_dialog_background">#E9E9E9</color>
 
     <color name="ultraLightBlue">#FF52BCEC</color>
     <color name="colorAccent">@color/ultraLightBlue</color>
@@ -15,7 +17,7 @@
 
     <color name="bbvaNavy">#072146</color>
     <color name="bbvaCoreDarkBlue">#043263</color>
-    <color name="bbvaCoreBlue">#004481</color>
+    <color name="bbvaCoreBlue">#1973B8</color>
     <color name="bbvaCoreLightBlue">#1464A5</color>
     <color name="bbvaMediumBlue">#1973B8</color>
     <color name="bbvaMediumLightBlue">#49A5E6</color>
@@ -27,10 +29,13 @@
     <color name="bbvaMediumAqua">#02A5A5</color>
     <color name="bbvaLightAqua">#5AC4C4</color>
     <color name="bbvaWhiteAqua">#EAF9FA</color>
+    <color name="inactiveGray">#666666</color>
 <!--    <color name="bbva600">#121212</color>-->
 <!--    <color name="bbva400">#BDBDBD</color>-->
 <!--    <color name="bbva300">D3D3D3</color>-->
 <!--    <color name="bbva200">#E9E9E9</color>-->
 <!--    <color name="bbva100">#F4F4F4</color>-->
 <!--    <color name="bbvaWhite">#FFFFFF</color>-->
+
+
 </resources>

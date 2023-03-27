@@ -34,7 +34,7 @@ class ComparativeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnRestartOnboarding.setOnClickListener {
-            preferences.save(Dictionary.ONBOARDING_FINISHED, true)
+            preferences.save(Dictionary.ONBOARDING_FINISHED, false)
             activity?.finish()
         }
         

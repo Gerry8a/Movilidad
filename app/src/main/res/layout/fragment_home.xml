@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bbvaLightAqua"
+    android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
 
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="300dp"
 
+        android:background="@color/bbvaMediumAqua"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView4"
@@ -20,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Categoría"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/imageView3" />
@@ -30,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Puntos totales"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toTopOf="@+id/imageView4" />
@@ -40,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="C02 totales"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
@@ -78,9 +85,10 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¡Hola, Pablo!"
+            android:layout_marginTop="16dp"
+            android:text="Hola, Gerardo"
+            android:textColor="@color/white"
             android:textSize="30sp"
-            android:textColor="@color/bluedark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -97,8 +105,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bbvaCoreBlue"
                 android:gravity="center"
-                android:text="0 Puntos" />
+                android:text="0 Puntos"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -113,8 +123,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bbvaCoreBlue"
                 android:gravity="center"
-                android:text="0 Kgs" />
+                android:text="0 Kgs"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar
@@ -132,13 +144,54 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/benton_sans_bbva_book"
+            android:padding="8dp"
+            android:text="Inicia tu viaje"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="32dp"
+            android:fontFamily="@font/benton_sans_bbva_book"
+            android:text="@string/home_text"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ProgressBar
         android:id="@+id/pb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
