@@ -12,6 +12,7 @@ import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.GET_CATALOGS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.GET_INFO_BY_USER
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.LIST_TAB_CARBON_PRINT_COLAB
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.REGISTER_CARBON_PRINT_COLAB
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.UPDATE_USER_ACCEPT_TERMS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.UPDATE_WORK_CENTER
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -89,7 +90,6 @@ interface ApiService {
     @POST(UPDATE_WORK_CENTER)
     suspend fun updateWorkCenter(@Body user: UserUpdateWorkCenter): Any
 
-
     @POST(GET_INFO_BY_USER)
     suspend fun getUserInfo(@Body userM: UserInfo): UserInfoResponse
 
@@ -98,6 +98,9 @@ interface ApiService {
 
     @POST(REGISTER_CARBON_PRINT_COLAB)
     suspend fun registerCarbonPrint(@Body carbonPrintRequest: CarbonPrintRequest): Any
+
+    @POST(UPDATE_USER_ACCEPT_TERMS)
+    suspend fun updateUserAcceptTerm(@Body userm: UserInfo): Any
 
 
 

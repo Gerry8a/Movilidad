@@ -57,12 +57,17 @@ class ThirdOnboardingFragment : BaseFragment(), AdapterView.OnItemSelectedListen
                 is ApiResponseStatus.Success -> {
                     binding.pb.visibility = View.GONE
                     preferences.save(ONBOARDING_FINISHED, true)
+                    saveUserPreferences(it.data)
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
                 }
             }
         }
+    }
+
+    private fun saveUserPreferences(data: Any) {
+
     }
 
     private fun initView() {

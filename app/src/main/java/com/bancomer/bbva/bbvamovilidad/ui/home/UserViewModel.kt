@@ -4,33 +4,54 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.DataX
+import com.bancomer.bbva.bbvamovilidad.data.api.response.UserInfo
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.repository.CatalogRepository
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO_ID
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TORRE_BBVA
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TORRE_BBVA_ID
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USER_ACCEPT_TERM
+import com.bancomer.bbva.bbvamovilidad.utils.Preferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val repository: CatalogRepository
+    private val repository: CatalogRepository,
+    private val preferences: Preferences
 ) : ViewModel() {
 
     private val _status = MutableLiveData<ApiResponseStatus<Any>>()
     val status: LiveData<ApiResponseStatus<Any>> get() = _status
 
+    private val _userInfo = MutableLiveData<UIState<UserEntity>>()
+    val userInfo: LiveData<UIState<UserEntity>> get() = _userInfo
+
     private lateinit var userM: String
 
-
     init {
+//        getUserInfoFromDB()
 //        downloadCatalog()
 //        getListUser()
 //        registerList()
+    }
+
+    fun getUserInfoFromDB() = viewModelScope.launch {
+        val userData = repository.getUserFromDB()
+        if (userData != null){
+            _userInfo.value = UIState.Success(userData)
+        }
+    }
+
+    fun updateUserAcceptTerm(userM: String) = viewModelScope.launch {
+        _status.value = ApiResponseStatus.Loading()
+        handleResponseStatus(repository.updateUserAcceptTerm(userM))
     }
 
     private fun registerList() {
@@ -81,6 +102,14 @@ class UserViewModel @Inject constructor(
         userEntity.nombres = response.nombres
         userEntity.userm = response.usuariom
         userEntity.codCentroTrabajo = response.codCentroTrabajo
+        userEntity.fhAceptaTerminos = response.fhAceptaTerminos
+        preferences.save(USERM, response.usuariom)
+
+        if (response.fhAceptaTerminos != null){
+            preferences.save(USER_ACCEPT_TERM, true)
+        } else {
+            preferences.save(USER_ACCEPT_TERM, false)
+        }
         return userEntity
     }
 

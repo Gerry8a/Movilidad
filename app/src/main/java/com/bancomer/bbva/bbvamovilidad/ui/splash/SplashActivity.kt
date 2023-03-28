@@ -26,8 +26,6 @@ class SplashActivity : BaseActivity() {
         setContentView(R.layout.activity_spalsh)
         val onboardingFinished = preferences.get(ONBOARDING_FINISHED, false) as Boolean
 
-        builsObservers()
-
         Thread.sleep(2000)
         if (!onboardingFinished) {
             val intent = Intent(this@SplashActivity, OnboardingActivity::class.java)
@@ -42,9 +40,5 @@ class SplashActivity : BaseActivity() {
         }
 
 
-    }
-
-    private fun builsObservers() {
-//        viewModel.status
     }
 }

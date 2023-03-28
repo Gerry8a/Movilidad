@@ -44,6 +44,12 @@ class CatalogRepository @Inject constructor(
             listUserInfo
         }
 
+    suspend fun updateUserAcceptTerm(userM: String): ApiResponseStatus<Any> =
+        makeNetworkcall {
+            val user = UserInfo(userM, "")
+            retrofitService.updateUserAcceptTerm(user)
+        }
+
     suspend fun getListUser(): ApiResponseStatus<Any> =
         makeNetworkcall {
             val userList = UserList("XME7841", "victorhugo.santillan.contractor@dev.bbva.com", 1)

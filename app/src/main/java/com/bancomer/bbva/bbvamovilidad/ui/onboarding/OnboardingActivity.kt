@@ -41,7 +41,6 @@ class OnboardingActivity : BaseActivity() {
 
         setUpNavigation()
         login()
-
     }
 
     private fun login() {
@@ -103,11 +102,7 @@ class OnboardingActivity : BaseActivity() {
     private fun saveUserFromAuth(user: String?) {
         val gson = Gson()
         val user = gson.fromJson(user, UserFromAuthResponse::class.java)
-//        preferences.save(USER_EMAIL, user.personEmail)
-//        val ggg = preferences.get(USER_EMAIL, "ggg").toString()
         viewModel.insertUser(user.personEmail)
-
-
     }
 
     fun OAuthErrorHandler(errorCode: Int, errorMsg: String) {

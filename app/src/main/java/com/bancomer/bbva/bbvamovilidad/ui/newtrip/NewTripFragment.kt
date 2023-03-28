@@ -8,19 +8,28 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.bancomer.bbva.bbvamovilidad.R
+import com.bancomer.bbva.bbvamovilidad.data.UIState
+import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
+import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentNewTripBinding
+import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
+import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class NewTripFragment : Fragment() {
+@AndroidEntryPoint
+class NewTripFragment : BaseFragment() {
 
     private lateinit var binding: FragmentNewTripBinding
+    private val viewModel: UserViewModel by viewModels()
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,46 +41,38 @@ class NewTripFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initView()
-        initG()
 
-        var bottomSheet = BottomSheetDialog(requireContext())
+        val privacityAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
 
-        //inflating layout
-
-        //inflating layout
-        val view = View.inflate(context, R.layout.dialog_bottomsheet, null)
-
-        //binding views to data binding.
-
-        //binding views to data binding.
-
-
-        //setting layout with bottom sheet
-
-        //setting layout with bottom sheet
-        bottomSheet.setContentView(view)
-
-//        bottomSheet = BottomSheetBehavior.from(view.parent as View)
-
-
-//        var view = layoutInflater.inflate(R.layout.dialog_bottomsheet, null)
-//        var bottonSheetView = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_bottomsheet, null)
-//        var behavior = BottomSheetBehavior.from(bottonSheetView.parent as View)
-//        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//        dialog.show()
-//        val btnClose = view.findViewById<Button>(R.id.btnCancel)
-//        btnClose.setOnClickListener { dialog.dismiss() }
-//        dialog.setCancelable(false)
-//        dialog.setContentView(view)
-//        var ttt = BottomSheetBehavior<View>()
-//        ttt = BottomSheetBehavior.from(behavior.parent as View)
-//        ttt.state = BottomSheetBehavior.STATE_EXPANDED
-
+        // TODO: Realizar flujo cuando ya aceptó el aviso de privacidad
+        if (privacityAccepted){
+            shortToast("ya aceptó")
+        } else {
+//            buildObservers()
+            showNoticePrivacity()
+        }
 
     }
 
-    private fun initG() {
+    private fun buildObservers() {
+        viewModel.userInfo.observe(requireActivity()){
+            when(it){
+                is UIState.Error -> TODO()
+                is UIState.Loading -> {}
+                is UIState.Success -> {
+                    checkIfUserAccepted(it.data!!)
+                }
+            }
+        }
+    }
+
+    private fun checkIfUserAccepted(it: UserEntity) {
+        if (it.fhAceptaTerminos != null){
+            showNoticePrivacity()
+        }
+    }
+
+    private fun showNoticePrivacity() {
         var fullScreen: Boolean = true
         val dialg = BottomSheetDialog(requireContext())
         dialg.setOnShowListener {
@@ -85,19 +86,38 @@ class NewTripFragment : Fragment() {
             btSheet.setBackgroundResource(android.R.color.background_dark)
             expandBottomSheet(bottomSheetBehavior)
         }
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_bottomsheet, null)
-        val btnCancelButton = view.findViewById<Button>(R.id.btnCancel)
+        val vieww = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_bottomsheet, null)
+        val btnCancelButton = vieww.findViewById<Button>(R.id.btnCancel)
         btnCancelButton.setOnClickListener { dialg.dismiss() }
-        val btnCancelIcon = view.findViewById<ImageView>(R.id.ibCanel)
-        btnCancelIcon.setOnClickListener { dialg.dismiss() }
+        val btnCancelIcon = vieww.findViewById<ImageView>(R.id.ibCanel)
+        btnCancelIcon.setOnClickListener {
+//            view?.findNavController()?.navigate(R.id.action_newTripFragment_to_homeFragment)
+//            view?.findNavController()?.previousBackStackEntry
+            dialg.dismiss()
+        }
+        val btnAccept = vieww.findViewById<Button>(R.id.btnAccept)
+        btnAccept.setOnClickListener {
+            viewModel.updateUserAcceptTerm(preferences.get(USERM, "") as String)
+            viewModel.status.observe(requireActivity()){
+                when(it){
+                    is ApiResponseStatus.Error -> shortToast("Error")
+                    is ApiResponseStatus.Loading -> shortToast("Loading")
+                    is ApiResponseStatus.Success -> {
+                        preferences.save(Dictionary.USER_ACCEPT_TERM, true)
+                        dialg.dismiss()
+                    }
+                }
+            }
+        }
 
-        dialg.setContentView(view)
+        dialg.setContentView(vieww)
         dialg.show()
     }
 
 
     private fun expandBottomSheet(bottomSheetBehavior: BottomSheetBehavior<FrameLayout>) {
         bottomSheetBehavior.skipCollapsed = true
+        bottomSheetBehavior.isDraggable = false
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
@@ -106,13 +126,5 @@ class NewTripFragment : Fragment() {
         layoutParams.height = Resources.getSystem().displayMetrics.heightPixels
         bottomSheet.layoutParams = layoutParams
     }
-
-//    private fun initView() {
-//        val dialg = BottomSheetDialog(requireContext())
-//        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_bottomsheet, null)
-//        dialg.setContentView(view)
-//        dialg.show()
-//    }
-
 
 }

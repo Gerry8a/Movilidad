@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_newTripFragment_to_comparativeFragment"
             app:destination="@id/comparativeFragment" />
+        <action
+            android:id="@+id/action_newTripFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/moreFragment"
