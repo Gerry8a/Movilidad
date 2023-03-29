@@ -40,4 +40,9 @@
     <string name="home_text">Entre más recorridos agregues a tu sede, más puntos podrás ganar. \n \n \n  Recuerda que si optas por medios de transporte más sustentables, generas menos CO2e y por lo tanto podrás ganar más puntos. \n \n \n Si ocupas más de un transporte, asegúrate de agregarlo en el momento para que la medición de emisiones y puntos sea más certera.</string>
     <string name="cancel">Cancelar</string>
     <string name="notice_privacy">Ver aviso de privacidad</string>
+
+    <!-- new trip -->
+    <string name="your_location">Tu ubicación</string>
+    <string name="destination">Sede destino: Parques Polanco</string>
+    <string name="type_of_transport">Tipo de transporte: Bicicleta</string>
 </resources>

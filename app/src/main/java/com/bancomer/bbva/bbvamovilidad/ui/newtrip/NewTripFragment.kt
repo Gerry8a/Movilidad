@@ -20,6 +20,7 @@ import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +30,6 @@ class NewTripFragment : BaseFragment() {
 
     private lateinit var binding: FragmentNewTripBinding
     private val viewModel: UserViewModel by viewModels()
-    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,18 +45,18 @@ class NewTripFragment : BaseFragment() {
         val privacityAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
 
         // TODO: Realizar flujo cuando ya aceptó el aviso de privacidad
-        if (privacityAccepted){
-            shortToast("ya aceptó")
-        } else {
-//            buildObservers()
-            showNoticePrivacity()
-        }
+        if (!privacityAccepted) showNoticePrivacity()
+        getAddress()
+
+    }
+
+    private fun getAddress() {
 
     }
 
     private fun buildObservers() {
-        viewModel.userInfo.observe(requireActivity()){
-            when(it){
+        viewModel.userInfo.observe(requireActivity()) {
+            when (it) {
                 is UIState.Error -> TODO()
                 is UIState.Loading -> {}
                 is UIState.Success -> {
@@ -67,7 +67,7 @@ class NewTripFragment : BaseFragment() {
     }
 
     private fun checkIfUserAccepted(it: UserEntity) {
-        if (it.fhAceptaTerminos != null){
+        if (it.fhAceptaTerminos != null) {
             showNoticePrivacity()
         }
     }
@@ -98,8 +98,8 @@ class NewTripFragment : BaseFragment() {
         val btnAccept = vieww.findViewById<Button>(R.id.btnAccept)
         btnAccept.setOnClickListener {
             viewModel.updateUserAcceptTerm(preferences.get(USERM, "") as String)
-            viewModel.status.observe(requireActivity()){
-                when(it){
+            viewModel.status.observe(requireActivity()) {
+                when (it) {
                     is ApiResponseStatus.Error -> shortToast("Error")
                     is ApiResponseStatus.Loading -> shortToast("Loading")
                     is ApiResponseStatus.Success -> {
