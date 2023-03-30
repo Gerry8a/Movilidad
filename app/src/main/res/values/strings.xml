@@ -17,6 +17,7 @@
     <string name="select_your_campus">Selecciona tu sede</string>
     <string name="error_no_internet">No hay internet</string>
     <string name="error_unkwnow">Error desconocido</string>
+    <string name="mi_huella">Mi Huella CO<small>2</small></string>
 
     <string-array name="places">
         <item>Torre BBVA</item>

@@ -1,7 +1,12 @@
 package com.bancomer.bbva.bbvamovilidad.ui.newtrip
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +14,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.bancomer.bbva.bbvamovilidad.R
@@ -21,15 +27,22 @@ import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
+import java.util.*
 
 @AndroidEntryPoint
 class NewTripFragment : BaseFragment() {
 
     private lateinit var binding: FragmentNewTripBinding
     private val viewModel: UserViewModel by viewModels()
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +58,61 @@ class NewTripFragment : BaseFragment() {
         val privacityAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
 
         // TODO: Realizar flujo cuando ya aceptó el aviso de privacidad
-        if (!privacityAccepted) showNoticePrivacity()
-        getAddress()
+        if (!privacityAccepted) {
+            showNoticePrivacity()
+        } else {
+            requestLocationPermission()
+            getLatLng()
+        }
+
 
     }
 
-    private fun getAddress() {
+    @SuppressLint("MissingPermission")
+    private fun getLatLng() {
+        var lastLocation: Location
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                getAddress(currentLatLng)
+            }
+        }
+    }
+
+    private fun getAddress(currentLatLng: LatLng) {
+        val mGeocoder = Geocoder(requireActivity(), Locale.getDefault())
+        val lat = currentLatLng.latitude
+        val lng = currentLatLng.longitude
+        lifecycleScope.launch(Dispatchers.Main) {
+            try {
+                val addressList: List<Address> =
+                    mGeocoder.getFromLocation(lat, lng, 1) as List<Address>
+
+                if (addressList != null && addressList.isNotEmpty()) {
+                    val address = addressList[0]
+                    val sb = StringBuilder()
+                    for (i in 0 until address.maxAddressLineIndex) {
+                        sb.append(address.getAddressLine(i)).append("\n")
+                    }
+
+                    if (address.premises != null)
+                        sb.append(address.premises).append(", ")
+
+                    sb.append(address.thoroughfare).append(" ")
+                    sb.append(address.subThoroughfare)
+
+                    val addressString = sb.toString()
+
+                    binding.etAddress.text = addressString
+
+
+                }
+            } catch (e: IOException) {
+//            Toast.makeText(applicationContext,"Unable connect to Geocoder",Toast.LENGTH_LONG).show()
+            }
+        }
 
     }
 
@@ -105,6 +167,8 @@ class NewTripFragment : BaseFragment() {
                     is ApiResponseStatus.Success -> {
                         preferences.save(Dictionary.USER_ACCEPT_TERM, true)
                         dialg.dismiss()
+                        requestLocationPermission()
+                        getLatLng()
                     }
                 }
             }

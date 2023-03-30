@@ -14,7 +14,7 @@
 
 
         <TextView
-            android:id="@+id/editTextTextPostalAddress"
+            android:id="@+id/etAddress"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -53,9 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_location"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPostalAddress"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPostalAddress"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPostalAddress" />
+            app:layout_constraintBottom_toBottomOf="@+id/etAddress"
+            app:layout_constraintStart_toStartOf="@+id/etAddress"
+            app:layout_constraintTop_toTopOf="@+id/etAddress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

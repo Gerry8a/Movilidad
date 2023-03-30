@@ -22,8 +22,15 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         setUpNavigation()
+        setUpToolbar()
 
     }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(binding.toolbar.toolbar)
+        supportActionBar?.title = getString(R.string.mi_huella)
+    }
+
     private fun setUpNavigation() {
         supportActionBar?.hide()
         navController = findNavController(R.id.nav_host_fragment_activity_main)
