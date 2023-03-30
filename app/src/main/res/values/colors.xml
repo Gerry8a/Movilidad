@@ -14,7 +14,12 @@
     <color name="ultraLightBlue">#FF52BCEC</color>
     <color name="colorAccent">@color/ultraLightBlue</color>
 
+    <!-- semáforo -->
     <color name="red">#ED122C</color>
+    <color name="low_level">#0E7E2D</color>
+    <color name="medium_level">#C49735</color>
+    <color name="hight_level">#CB122E</color>
+
 
     <color name="bbvaNavy">#072146</color>
     <color name="bbvaCoreDarkBlue">#043263</color>

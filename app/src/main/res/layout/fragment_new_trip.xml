@@ -90,7 +90,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/tvTransportationType"
             style="@style/CustomTextCatalogPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

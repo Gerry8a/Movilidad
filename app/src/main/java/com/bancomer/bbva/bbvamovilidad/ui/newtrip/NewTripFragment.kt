@@ -57,7 +57,6 @@ class NewTripFragment : BaseFragment() {
 
         val privacityAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
 
-        // TODO: Realizar flujo cuando ya aceptó el aviso de privacidad
         if (!privacityAccepted) {
             showNoticePrivacity()
         } else {
@@ -65,7 +64,9 @@ class NewTripFragment : BaseFragment() {
             getLatLng()
         }
 
-
+        binding.tvTransportationType.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.action_newTripFragment_to_listMedioFragment)
+        }
     }
 
     @SuppressLint("MissingPermission")

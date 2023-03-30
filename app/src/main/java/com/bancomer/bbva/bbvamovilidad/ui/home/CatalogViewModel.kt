@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.Data
 import com.bancomer.bbva.bbvamovilidad.model.Movie
@@ -20,14 +19,14 @@ class CatalogViewModel @Inject constructor(
 
 //    private val catalogRepository = CatalogRepository()
 
-    private val _catalog = MutableLiveData<Data>()
-    val catalog: LiveData<Data> get() = _catalog
+    private val _catalog = MutableLiveData<ApiResponseStatus<Data>>()
+    val catalog: LiveData<ApiResponseStatus<Data>> get() = _catalog
 
-    private val _status = MutableLiveData<com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<Data>>()
-    val status: LiveData<com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<Data>> get() = _status
+    private val _status = MutableLiveData<ApiResponseStatus<Data>>()
+    val status: LiveData<ApiResponseStatus<Data>> get() = _status
 
-    private val _statusMovie = MutableLiveData<com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<List<Movie>>>()
-    val statusMovie: LiveData<com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<List<Movie>>> get() = _statusMovie
+    private val _statusMovie = MutableLiveData<ApiResponseStatus<List<Movie>>>()
+    val statusMovie: LiveData<ApiResponseStatus<List<Movie>>> get() = _statusMovie
 
     private val _movie = MutableLiveData<List<Movie>>()
     val movie: LiveData<List<Movie>> get() = _movie
@@ -44,8 +43,8 @@ class CatalogViewModel @Inject constructor(
     }
 
     private fun handlerResponseStatus(apiResponseStatus: ApiResponseStatus<Data>) {
-        if (apiResponseStatus is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Success){
-            _catalog.value = apiResponseStatus.data!!
+        if (apiResponseStatus is ApiResponseStatus.Success){
+            _catalog.value = apiResponseStatus
         }
         _status.value = apiResponseStatus
 
