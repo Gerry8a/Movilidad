@@ -19,5 +19,7 @@ data class UserEntity(
     @ColumnInfo(name = "codCentroTrabajo")
     var codCentroTrabajo: Int? = null,
     @ColumnInfo(name = "fhAceptaTerminos")
-    var fhAceptaTerminos: String? = null
+    var fhAceptaTerminos: String? = null,
+    @ColumnInfo(name = "centroTrabajoAct")
+    var centroTrabajoAct: String? = null
 )

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bancomer.bbva.bbvamovilidad.ObservableData
 import com.bancomer.bbva.bbvamovilidad.R
+import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiServiceInterceptor
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentHomeBinding
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private var observableData = ObservableData()
-    private val viewModel: CatalogViewModel by viewModels()
+    private val viewModel: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +65,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-
+        viewModel.getUserInfoFromDB()
+        viewModel.userInfo.observe(requireActivity()){
+            when(it){
+                is UIState.Error -> {}
+                is UIState.Loading -> {}
+                is UIState.Success -> {
+                    binding.tvName.text = it.data?.nombres
+                }
+            }
+        }
     }
 
     private fun buildObservers() {
@@ -108,9 +118,6 @@ class HomeFragment : Fragment() {
 //                    val accessToken = "Bearer $token"
 //                    ApiServiceInterceptor.setSessionToken(token)
                     ApiServiceInterceptor.setSessionToken(token)
-                    Log.d(TAG, "onAccessTokenSuccess: $token")
-                    viewModel.downloadCatalog()
-
                 }
                 observableData.setUserLogin(
                     gson.toJson(
@@ -118,7 +125,7 @@ class HomeFragment : Fragment() {
                     )
                 )
                 ApiServiceInterceptor.setSessionToken(token)
-              
+
                 val user = gson.toJson(
                     OAuthManager.getInstance().getUser(context)
                 )

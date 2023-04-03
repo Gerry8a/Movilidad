@@ -44,9 +44,10 @@
 
     <!-- new trip -->
     <string name="your_location">Tu ubicación</string>
-    <string name="destination">Sede destino: Parques Polanco</string>
+    <string name="destination">Torre BBVA</string>
     <string name="type_of_transport">Tipo de transporte: Bicicleta</string>
 
     <!-- items -->
     <string name="emission">Genera %s CO<small>2e</small> por km</string>
+    <string name="trasnportation_type">Medio de transporte</string>
 </resources>

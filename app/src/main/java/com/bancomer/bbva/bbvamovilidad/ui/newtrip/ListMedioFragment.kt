@@ -1,12 +1,10 @@
 package com.bancomer.bbva.bbvamovilidad.ui.newtrip
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.databinding.adapters.AdapterViewBindingAdapter.OnItemSelected
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,7 @@ import com.bancomer.bbva.bbvamovilidad.databinding.FragmentListMedioBinding
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.CatalogViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ListMedioFragment : BaseFragment() {
@@ -35,6 +34,7 @@ class ListMedioFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpToolBar()
         viewModel.downloadCatalog()
         viewModel.catalog.observe(requireActivity()){
             when(it){
@@ -48,6 +48,14 @@ class ListMedioFragment : BaseFragment() {
                 else -> {}
             }
         }
+    }
+
+    private fun setUpToolBar() {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        binding.tbFragment.toolbar.title = getString(R.string.trasnportation_type)
+        binding.tbFragment.toolbar
     }
 
     private fun fillData(medio: Medio) {
@@ -64,5 +72,8 @@ class ListMedioFragment : BaseFragment() {
         longToast(medio.nomMedioTraslado)
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
 }

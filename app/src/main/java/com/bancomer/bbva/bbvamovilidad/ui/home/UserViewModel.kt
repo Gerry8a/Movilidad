@@ -44,7 +44,7 @@ class UserViewModel @Inject constructor(
 
     fun getUserInfoFromDB() = viewModelScope.launch {
         val userData = repository.getUserFromDB()
-        if (userData != null){
+        if (userData != null) {
             _userInfo.value = UIState.Success(userData)
         }
     }
@@ -61,13 +61,17 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    private fun updateWorkCenter(campus: Int){
+    private fun updateWorkCenter(campus: Int) {
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
             val userEntity = repository.getUserFromDB()
             userM = userEntity.userm!!
             handleResponseStatus(repository.updateCampus(campus, userM))
         }
+    }
+
+    private fun saveUserWorkCenterDB() {
+        TODO("Not yet implemented")
     }
 
     /**
@@ -77,7 +81,7 @@ class UserViewModel @Inject constructor(
     fun insertUser(mail: String) {
         viewModelScope.launch {
             repository.getUserInfo(mail).let {
-                when(it){
+                when (it) {
                     is ApiResponseStatus.Error -> {
 
                     }
@@ -103,9 +107,10 @@ class UserViewModel @Inject constructor(
         userEntity.userm = response.usuariom
         userEntity.codCentroTrabajo = response.codCentroTrabajo
         userEntity.fhAceptaTerminos = response.fhAceptaTerminos
+        userEntity.centroTrabajoAct = response.centroTrabajoAct
         preferences.save(USERM, response.usuariom)
 
-        if (response.fhAceptaTerminos != null){
+        if (response.fhAceptaTerminos != null) {
             preferences.save(USER_ACCEPT_TERM, true)
         } else {
             preferences.save(USER_ACCEPT_TERM, false)
@@ -132,9 +137,14 @@ class UserViewModel @Inject constructor(
     }
 
     fun getWorkCode(workCenter: String) {
-        when(workCenter){
-            TORRE_BBVA -> {updateWorkCenter(TORRE_BBVA_ID)}
-            PARQUES_POLANCO -> {updateWorkCenter(PARQUES_POLANCO_ID)}
+        when (workCenter) {
+            TORRE_BBVA -> {
+                updateWorkCenter(TORRE_BBVA_ID)
+//                updateWorkCenterDB(workCenter)
+            }
+            PARQUES_POLANCO -> {
+                updateWorkCenter(PARQUES_POLANCO_ID)
+            }
         }
     }
 }

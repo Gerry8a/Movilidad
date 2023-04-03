@@ -6,7 +6,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.UIState
@@ -55,17 +53,26 @@ class NewTripFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val privacityAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
+        val privacyAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
 
-        if (!privacityAccepted) {
+        if (!privacyAccepted) {
             showNoticePrivacity()
         } else {
             requestLocationPermission()
             getLatLng()
         }
 
-        binding.tvTransportationType.setOnClickListener {
+//        buildObservers()
+//        initView()
+        binding.cvtransportationtype.setOnClickListener {
             view?.findNavController()?.navigate(R.id.action_newTripFragment_to_listMedioFragment)
+        }
+    }
+
+    // TODO: Implementar esta vista 
+    private fun initView() {
+        viewModel.userInfo.observe(requireActivity()){
+            fillData(it.data!!)
         }
     }
 
@@ -123,10 +130,15 @@ class NewTripFragment : BaseFragment() {
                 is UIState.Error -> TODO()
                 is UIState.Loading -> {}
                 is UIState.Success -> {
-                    checkIfUserAccepted(it.data!!)
+//                    checkIfUserAccepted(it.data!!)
+                    fillData(it.data!!)
                 }
             }
         }
+    }
+
+    private fun fillData(user: UserEntity) {
+        binding.tvWorkCenter.text = user.centroTrabajoAct.toString()
     }
 
     private fun checkIfUserAccepted(it: UserEntity) {

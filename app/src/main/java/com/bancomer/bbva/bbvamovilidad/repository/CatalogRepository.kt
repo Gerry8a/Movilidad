@@ -24,6 +24,8 @@ class CatalogRepository @Inject constructor(
 
     suspend fun getUserFromDB(): UserEntity = userDao.getUSerInfo()
 
+//    suspend fun upDateWorkCenterDB(workCeter: String) = userDao.
+
     suspend fun updateCampus(workCenterID: Int, userM: String): ApiResponseStatus<Any> =
         makeNetworkcall {
             val user = UserUpdateWorkCenter(userM, "", workCenterID)
