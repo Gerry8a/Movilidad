@@ -24,7 +24,8 @@ class CatalogRepository @Inject constructor(
 
     suspend fun getUserFromDB(): UserEntity = userDao.getUSerInfo()
 
-//    suspend fun upDateWorkCenterDB(workCeter: String) = userDao.
+    suspend fun upDateWorkCenterDB(codWorkCenter: Int, workCenter: String) =
+        userDao.updateWorkCenter(codWorkCenter, workCenter)
 
     suspend fun updateCampus(workCenterID: Int, userM: String): ApiResponseStatus<Any> =
         makeNetworkcall {
@@ -79,7 +80,6 @@ class CatalogRepository @Inject constructor(
                 "55000",
                 ggg,
                 "victorhugo.santillan.contractor@dev.bbva.com",
-                true
             )
 
             val jsonStirng = Gson().toJson(carbonPrintRequest)
@@ -91,7 +91,7 @@ class CatalogRepository @Inject constructor(
         }
 
 
-    suspend fun downloadMovie(): com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus<List<Movie>> =
+    suspend fun downloadMovie(): ApiResponseStatus<List<Movie>> =
         makeNetworkcall {
             val listMovie = retrofitService.listPopularMovies("72e2e780397bdc9eedd34c1c78c38ccd")
             val movieDTOList = listMovie.results

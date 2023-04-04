@@ -4,6 +4,5 @@ data class CarbonPrintRequest(
     val codCentroTrabajoDestino: Int,
     val cpOrigen: String,
     val detalle: List<Detalle>,
-    val email: String,
-    val fgRegPorGps: Boolean
+    val usuarioM: String
 )

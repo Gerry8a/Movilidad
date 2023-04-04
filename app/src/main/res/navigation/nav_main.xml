@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_newTripFragment_to_listMedioFragment"
             app:destination="@id/listMedioFragment" />
+        <action
+            android:id="@+id/action_newTripFragment_to_currentTripFragment"
+            app:destination="@id/currentTripFragment" />
     </fragment>
     <fragment
         android:id="@+id/moreFragment"
@@ -57,4 +60,9 @@
         android:name="com.bancomer.bbva.bbvamovilidad.ui.newtrip.ListMedioFragment"
         android:label="fragment_list_medio"
         tools:layout="@layout/fragment_list_medio" />
+    <fragment
+        android:id="@+id/currentTripFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.newtrip.CurrentTripFragment"
+        android:label="fragment_current_trip"
+        tools:layout="@layout/fragment_current_trip" />
 </navigation>

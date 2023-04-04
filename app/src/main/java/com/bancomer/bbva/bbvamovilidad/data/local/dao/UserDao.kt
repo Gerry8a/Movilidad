@@ -16,4 +16,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(userEntity: UserEntity)
 
+    @Query("UPDATE USER_TABLE SET codCentroTrabajo = :cod, centroTrabajoAct = :centroTrabajoAct")
+    suspend fun updateWorkCenter(cod: Int, centroTrabajoAct: String)
+
 }

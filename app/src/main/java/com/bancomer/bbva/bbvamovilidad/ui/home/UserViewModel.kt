@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.DataX
-import com.bancomer.bbva.bbvamovilidad.data.api.response.UserInfo
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.repository.CatalogRepository
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO
@@ -68,10 +67,6 @@ class UserViewModel @Inject constructor(
             userM = userEntity.userm!!
             handleResponseStatus(repository.updateCampus(campus, userM))
         }
-    }
-
-    private fun saveUserWorkCenterDB() {
-        TODO("Not yet implemented")
     }
 
     /**
@@ -140,11 +135,18 @@ class UserViewModel @Inject constructor(
         when (workCenter) {
             TORRE_BBVA -> {
                 updateWorkCenter(TORRE_BBVA_ID)
-//                updateWorkCenterDB(workCenter)
+                updateWorkCenterDB(TORRE_BBVA_ID, workCenter)
             }
             PARQUES_POLANCO -> {
                 updateWorkCenter(PARQUES_POLANCO_ID)
+                updateWorkCenterDB(PARQUES_POLANCO_ID, workCenter)
             }
         }
     }
+
+    private fun updateWorkCenterDB(codWorkCenter: Int, workCenter: String) = viewModelScope.launch {
+        repository.upDateWorkCenterDB(codWorkCenter, workCenter)
+    }
+
 }
+

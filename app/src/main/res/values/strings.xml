@@ -50,4 +50,7 @@
     <!-- items -->
     <string name="emission">Genera %s CO<small>2e</small> por km</string>
     <string name="trasnportation_type">Medio de transporte</string>
+    <string name="text_current_trip">De ser necesario puedes agregat oyto medio de transporte; recuerda hacerlo en el momento que hacer cambio para una mejor precisión en el cálculo de puntos y emisiones CO2e</string>
+    <string name="end_trip">Terminar viaje</string>
+    <string name="add_transportation">Agregar medio</string>
 </resources>

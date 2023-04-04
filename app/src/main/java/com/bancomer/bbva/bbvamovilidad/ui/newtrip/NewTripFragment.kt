@@ -54,16 +54,19 @@ class NewTripFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val privacyAccepted = preferences.get(Dictionary.USER_ACCEPT_TERM, false) as Boolean
+        initView()
 
         if (!privacyAccepted) {
-            showNoticePrivacity()
+            showNoticePrivacy()
         } else {
             requestLocationPermission()
             getLatLng()
         }
 
+
+
 //        buildObservers()
-//        initView()
+
         binding.cvtransportationtype.setOnClickListener {
             view?.findNavController()?.navigate(R.id.action_newTripFragment_to_listMedioFragment)
         }
@@ -71,6 +74,7 @@ class NewTripFragment : BaseFragment() {
 
     // TODO: Implementar esta vista 
     private fun initView() {
+        viewModel.getUserInfoFromDB()
         viewModel.userInfo.observe(requireActivity()){
             fillData(it.data!!)
         }
@@ -143,11 +147,11 @@ class NewTripFragment : BaseFragment() {
 
     private fun checkIfUserAccepted(it: UserEntity) {
         if (it.fhAceptaTerminos != null) {
-            showNoticePrivacity()
+            showNoticePrivacy()
         }
     }
 
-    private fun showNoticePrivacity() {
+    private fun showNoticePrivacy() {
         var fullScreen: Boolean = true
         val dialg = BottomSheetDialog(requireContext())
         dialg.setOnShowListener {
