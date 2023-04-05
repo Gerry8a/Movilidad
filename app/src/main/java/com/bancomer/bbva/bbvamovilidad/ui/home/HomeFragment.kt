@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
                 is UIState.Error -> {}
                 is UIState.Loading -> {}
                 is UIState.Success -> {
-                    binding.tvName.text = it.data?.nombres
+                    binding.tvName.text = getString(R.string.welcome_user, it.data?.nombres)
                 }
             }
         }

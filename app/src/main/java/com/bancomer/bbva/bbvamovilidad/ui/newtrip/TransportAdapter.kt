@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
 import com.bancomer.bbva.bbvamovilidad.databinding.ItemMedioBinding
+import com.bancomer.bbva.bbvamovilidad.utils.BitmapUtils
+import com.bumptech.glide.Glide
 
 class TransportAdapter(
     private val medioList: List<Medio>,
@@ -31,22 +33,23 @@ class TransportAdapter(
 
             fun bind(medio: Medio, onClickListener: (Medio) -> Unit){
                 binding.tvNombreMedio.text = medio.nomMedioTraslado
-                binding.tvGeneraKm.text = itemView.context.resources.getText(R.string.emission, medio.numEmisionCo2e.toString())
+                binding.tvGeneraKm.text = itemView.context.resources.getString(R.string.emission, medio.numEmisionCo2e.toString())
                 itemView.setOnClickListener { onClickListener(medio) }
                 when(medio.idSemaforo){
                     1 -> {
-                        binding.tvNivelCo.text = "Generación de CO2e bajo"
+                        binding.tvNivelCo.text = itemView.context.getString(R.string.generate_low)
                         binding.tvNivelCo.setTextColor(ContextCompat.getColor(itemView.context, R.color.low_level))
                     }
                     2 -> {
-                        binding.tvNivelCo.text = "Generación de CO2e medio"
+                        binding.tvNivelCo.text = itemView.context.getString(R.string.generate_medium)
                         binding.tvNivelCo.setTextColor(ContextCompat.getColor(itemView.context, R.color.medium_level))
                     }
                     3 -> {
-                        binding.tvNivelCo.text = "Generación de CO2e alto"
+                        binding.tvNivelCo.text = itemView.context.getString(R.string.generate_high)
                         binding.tvNivelCo.setTextColor(ContextCompat.getColor(itemView.context, R.color.hight_level))
                     }
                 }
+                binding.ivIconMedio.setImageBitmap(BitmapUtils.stringToBitmap(medio.asset1x))
             }
     }
 }

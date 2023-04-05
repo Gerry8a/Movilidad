@@ -24,6 +24,9 @@
         <item>Parques Polanco</item>
     </string-array>
 
+    <!-- home -->
+    <string name="welcome_user">Hola, %s</string>
+
     <!-- onboarding -->
     <string name="co">CO<small>2</small></string>
     <string name="welcome">Bienvenido a mi Huella CO<small>2</small></string>
@@ -48,9 +51,12 @@
     <string name="type_of_transport">Tipo de transporte: Bicicleta</string>
 
     <!-- items -->
-    <string name="emission">Genera %s CO<small>2e</small> por km</string>
+    <string name="emission">Genera %sg de CO<small>2e</small> por km</string>
     <string name="trasnportation_type">Medio de transporte</string>
     <string name="text_current_trip">De ser necesario puedes agregat oyto medio de transporte; recuerda hacerlo en el momento que hacer cambio para una mejor precisión en el cálculo de puntos y emisiones CO2e</string>
     <string name="end_trip">Terminar viaje</string>
     <string name="add_transportation">Agregar medio</string>
+    <string name="generate_low">Generación de CO<small>2e</small> bajo</string>
+    <string name="generate_medium">Generación de CO<small>2e</small> medio</string>
+    <string name="generate_high">Generación de CO<small>2e</small> alto</string>
 </resources>

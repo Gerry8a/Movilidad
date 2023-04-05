@@ -6,5 +6,6 @@ data class Medio(
     val id: Int,
     val idSemaforo: Int,
     val nomMedioTraslado: String,
-    val numEmisionCo2e: Double
+    val numEmisionCo2e: Double,
+    val asset1x: String
 )

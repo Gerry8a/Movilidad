@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bancomer.bbva.bbvamovilidad.R
@@ -15,6 +16,8 @@ import com.bancomer.bbva.bbvamovilidad.databinding.FragmentListMedioBinding
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.CatalogViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -36,12 +39,12 @@ class ListMedioFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpToolBar()
         viewModel.downloadCatalog()
-        viewModel.catalog.observe(requireActivity()){
-            when(it){
+        viewModel.catalog.observe(requireActivity()) {
+            when (it) {
                 is ApiResponseStatus.Error -> shortToast("Errro")
                 is ApiResponseStatus.Loading -> shortToast("Loading")
                 is ApiResponseStatus.Success -> {
-                    for (medio in it.data.gpoMedioList[2].medios){
+                    for (medio in it.data.gpoMedioList[0].medios) {
                         fillData(medio)
                     }
                 }
@@ -55,20 +58,22 @@ class ListMedioFragment : BaseFragment() {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
         binding.tbFragment.toolbar.title = getString(R.string.trasnportation_type)
-        binding.tbFragment.toolbar
     }
 
     private fun fillData(medio: Medio) {
-        val manager = LinearLayoutManager(requireContext())
-        listMedio.add(medio)
-        binding.rvListmedios.adapter = TransportAdapter(listMedio){medio -> onItemSelected(medio)}
-        binding.rvListmedios.layoutManager = manager
-        binding.rvListmedios.setHasFixedSize(true)
-        val decoration = DividerItemDecoration(requireContext(), manager.orientation)
-        binding.rvListmedios.addItemDecoration(decoration)
+        lifecycleScope.launch(Dispatchers.Main) {
+            val manager = LinearLayoutManager(requireContext())
+            listMedio.add(medio)
+            binding.rvListmedios.adapter =
+                TransportAdapter(listMedio) { medio -> onItemSelected(medio) }
+            binding.rvListmedios.layoutManager = manager
+            binding.rvListmedios.setHasFixedSize(true)
+            val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+            binding.rvListmedios.addItemDecoration(decoration)
+        }
     }
 
-    private fun onItemSelected(medio: Medio){
+    private fun onItemSelected(medio: Medio) {
         longToast(medio.nomMedioTraslado)
     }
 
