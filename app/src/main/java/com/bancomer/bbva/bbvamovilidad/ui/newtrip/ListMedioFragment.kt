@@ -5,16 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentListMedioBinding
+import com.bancomer.bbva.bbvamovilidad.ui.MainActivity
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.CatalogViewModel
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ID_MEDIO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.MEDIO_SELECCIONADO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_CLASS
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +60,7 @@ class ListMedioFragment : BaseFragment() {
         }
     }
 
+    // TODO: Ocultar bottomNavigation cuando aparece el fragmento
     private fun setUpToolBar() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,7 +82,13 @@ class ListMedioFragment : BaseFragment() {
     }
 
     private fun onItemSelected(medio: Medio) {
-        longToast(medio.nomMedioTraslado)
+        preferences.save(ID_MEDIO, medio.id)
+        val gson = Gson()
+        val stringClass = gson.toJson(medio)
+        val bundle = bundleOf(MEDIO_SELECCIONADO to stringClass)
+        preferences.save(STRING_CLASS, stringClass)
+        view?.findNavController()
+            ?.navigate(R.id.action_listMedioFragment_to_newTripFragment, bundle)
     }
 
     override fun onDestroy() {

@@ -59,4 +59,5 @@
     <string name="generate_low">Generación de CO<small>2e</small> bajo</string>
     <string name="generate_medium">Generación de CO<small>2e</small> medio</string>
     <string name="generate_high">Generación de CO<small>2e</small> alto</string>
+    <string name="selecciona_transporte">Seleecciona tu transporte</string>
 </resources>

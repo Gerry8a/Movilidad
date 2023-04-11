@@ -64,7 +64,7 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
             val userEntity = repository.getUserFromDB()
-            userM = userEntity.userm!!
+            userM = "XMF0673"
             handleResponseStatus(repository.updateCampus(campus, userM))
         }
     }

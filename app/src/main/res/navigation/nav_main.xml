@@ -59,7 +59,11 @@
         android:id="@+id/listMedioFragment"
         android:name="com.bancomer.bbva.bbvamovilidad.ui.newtrip.ListMedioFragment"
         android:label="fragment_list_medio"
-        tools:layout="@layout/fragment_list_medio" />
+        tools:layout="@layout/fragment_list_medio" >
+        <action
+            android:id="@+id/action_listMedioFragment_to_newTripFragment"
+            app:destination="@id/newTripFragment" />
+    </fragment>
     <fragment
         android:id="@+id/currentTripFragment"
         android:name="com.bancomer.bbva.bbvamovilidad.ui.newtrip.CurrentTripFragment"

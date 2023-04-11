@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bancomer.bbva.bbvamovilidad.utils.Preferences
+import com.google.gson.Gson
 import javax.inject.Inject
 
 abstract class BaseFragment: Fragment() {

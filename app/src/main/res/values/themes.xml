@@ -48,6 +48,13 @@
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
     </style>
+    <style name="CustomTextCatalogSelected" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:fontFamily">@font/benton_sans_bbva_book</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
     <style name="ToolBarTitleAppearance">
         <item name="fontFamily">@font/benton_sans_bbva_book</item>
         <item name="android:layout_centerHorizontal">true</item>

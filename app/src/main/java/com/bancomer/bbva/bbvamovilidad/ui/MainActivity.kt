@@ -1,6 +1,8 @@
 package com.bancomer.bbva.bbvamovilidad.ui
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -36,23 +38,23 @@ class MainActivity : BaseActivity() {
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         binding.bottomNavigation.setupWithNavController(navController)
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when(item.itemId){
-                R.id.ic_home ->{
+            when (item.itemId) {
+                R.id.ic_home -> {
                     navController.popBackStack()
                     navController.navigate(R.id.homeFragment)
                     true
                 }
-                R.id.ic_new_trip ->{
+                R.id.ic_new_trip -> {
                     navController.popBackStack()
                     navController.navigate(R.id.newTripFragment)
                     true
                 }
-                R.id.ic_comparative ->{
+                R.id.ic_comparative -> {
                     navController.popBackStack()
                     navController.navigate(R.id.comparativeFragment)
                     true
                 }
-                R.id.ic_record ->{
+                R.id.ic_record -> {
                     navController.popBackStack()
                     navController.navigate(R.id.itemFragment)
                     true
@@ -62,7 +64,9 @@ class MainActivity : BaseActivity() {
 //                    navController.navigate(R.id.moreFragment)
 //                    true
 //                }
-                else -> {false}
+                else -> {
+                    false
+                }
             }
         }
     }

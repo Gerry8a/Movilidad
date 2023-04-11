@@ -1,12 +1,13 @@
 package com.bancomer.bbva.bbvamovilidad.ui.newtrip
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bancomer.bbva.bbvamovilidad.R
+import androidx.fragment.app.Fragment
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentCurrentTripBinding
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +25,11 @@ class CurrentTripFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val requestCarbonPrint: String?
+        arguments?.let {
+            requestCarbonPrint = it.getString("request")
+            Log.d(TAG, "onViewCreated: $requestCarbonPrint")
+        }
     }
 
 

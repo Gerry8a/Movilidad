@@ -12,6 +12,9 @@ object Dictionary {
     const val USERM = "USERM"
     const val USER_ACCEPT_TERM = "ACCEPT_TERM"
     const val PREFERENCES = "SPDB"
+    const val ID_MEDIO = "ID_MEDIO"
+    const val MEDIO_SELECCIONADO = "MEDIO SELECCIONADO"
+    const val STRING_CLASS = "STRING_CLASS"
 
     //Servicios
     const val BASE_URL_GATEWAY = "https://dev-bbva-gateway.appspot.com/mov-sostenible/"

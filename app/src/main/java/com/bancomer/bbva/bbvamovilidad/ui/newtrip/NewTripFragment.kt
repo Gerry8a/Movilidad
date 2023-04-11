@@ -12,23 +12,31 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
+import com.bancomer.bbva.bbvamovilidad.data.api.request.CarbonPrintRequest
+import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentNewTripBinding
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
+import com.bancomer.bbva.bbvamovilidad.utils.BitmapUtils
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ID_MEDIO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.MEDIO_SELECCIONADO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_CLASS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +49,8 @@ class NewTripFragment : BaseFragment() {
     private lateinit var binding: FragmentNewTripBinding
     private val viewModel: UserViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var codCentroTrabajo: Int = 0
+    private lateinit var cpOrigen: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,21 +73,47 @@ class NewTripFragment : BaseFragment() {
             getLatLng()
         }
 
-
-
-//        buildObservers()
-
         binding.cvtransportationtype.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_newTripFragment_to_listMedioFragment)
+            view.findNavController().navigate(R.id.action_newTripFragment_to_listMedioFragment)
         }
+
+        binding.btnNewTrip.setOnClickListener {
+            val ggg = getRequest()
+            val bundle = bundleOf("request" to ggg)
+            view.findNavController()
+                .navigate(R.id.action_newTripFragment_to_currentTripFragment, bundle)
+        }
+    }
+
+    private fun getRequest(): String {
+        val request = CarbonPrintRequest()
+        request.cpOrigen = cpOrigen
+        request.usuarioM = preferences.get(USERM, "") as String
+        request.codCentroTrabajoDestino = codCentroTrabajo
+        request.detalle
+        val gson = Gson()
+        return gson.toJson(request)
     }
 
     // TODO: Implementar esta vista 
     private fun initView() {
         viewModel.getUserInfoFromDB()
-        viewModel.userInfo.observe(requireActivity()){
+        viewModel.userInfo.observe(requireActivity()) {
             fillData(it.data!!)
         }
+
+        var idSelected = preferences.get(ID_MEDIO, 0) as Int
+        print(idSelected.toString())
+
+        if (idSelected >= 1) printMedio()
+    }
+
+    private fun printMedio() {
+        val params = preferences.get(STRING_CLASS, "") as String
+        val gson = Gson()
+        val medio = gson.fromJson(params, Medio::class.java)
+        binding.tvTransportationType.text = medio.nomMedioTraslado
+        binding.ivIcon.setImageBitmap(BitmapUtils.stringToBitmap(medio.asset1x))
     }
 
     @SuppressLint("MissingPermission")
@@ -102,7 +138,7 @@ class NewTripFragment : BaseFragment() {
                 val addressList: List<Address> =
                     mGeocoder.getFromLocation(lat, lng, 1) as List<Address>
 
-                if (addressList != null && addressList.isNotEmpty()) {
+                if (addressList.isNotEmpty()) {
                     val address = addressList[0]
                     val sb = StringBuilder()
                     for (i in 0 until address.maxAddressLineIndex) {
@@ -118,6 +154,8 @@ class NewTripFragment : BaseFragment() {
                     val addressString = sb.toString()
 
                     binding.etAddress.text = addressString
+
+                    cpOrigen = address.postalCode
 
 
                 }
@@ -143,6 +181,7 @@ class NewTripFragment : BaseFragment() {
 
     private fun fillData(user: UserEntity) {
         binding.tvWorkCenter.text = user.centroTrabajoAct.toString()
+        codCentroTrabajo = user.codCentroTrabajo!!
     }
 
     private fun checkIfUserAccepted(it: UserEntity) {
