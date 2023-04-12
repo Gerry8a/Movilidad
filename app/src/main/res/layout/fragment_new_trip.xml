@@ -94,7 +94,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/destination"
+                tools:text="@string/destination"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView11"
                 app:layout_constraintEnd_toStartOf="@+id/imageView8"
                 app:layout_constraintStart_toEndOf="@+id/imageView11"

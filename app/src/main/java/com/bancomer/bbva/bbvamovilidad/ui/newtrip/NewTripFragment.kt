@@ -20,6 +20,7 @@ import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.request.CarbonPrintRequest
+import com.bancomer.bbva.bbvamovilidad.data.api.request.Detalle
 import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentNewTripBinding
@@ -27,9 +28,12 @@ import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
 import com.bancomer.bbva.bbvamovilidad.utils.BitmapUtils
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ADDRESS
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.DESTINATION
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ID_MEDIO
-import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.MEDIO_SELECCIONADO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.REQUEST
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_CLASS
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_DETAIL
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -51,6 +55,7 @@ class NewTripFragment : BaseFragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var codCentroTrabajo: Int = 0
     private lateinit var cpOrigen: String
+    private lateinit var detailString: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,8 +83,8 @@ class NewTripFragment : BaseFragment() {
         }
 
         binding.btnNewTrip.setOnClickListener {
-            val ggg = getRequest()
-            val bundle = bundleOf("request" to ggg)
+            val request = getRequest()
+            val bundle = bundleOf(REQUEST to request, STRING_DETAIL to detailString)
             view.findNavController()
                 .navigate(R.id.action_newTripFragment_to_currentTripFragment, bundle)
         }
@@ -87,10 +92,9 @@ class NewTripFragment : BaseFragment() {
 
     private fun getRequest(): String {
         val request = CarbonPrintRequest()
+        request.codCentroTrabajoDestino = codCentroTrabajo
         request.cpOrigen = cpOrigen
         request.usuarioM = preferences.get(USERM, "") as String
-        request.codCentroTrabajoDestino = codCentroTrabajo
-        request.detalle
         val gson = Gson()
         return gson.toJson(request)
     }
@@ -154,8 +158,11 @@ class NewTripFragment : BaseFragment() {
                     val addressString = sb.toString()
 
                     binding.etAddress.text = addressString
+                    preferences.save(ADDRESS, addressString)
 
                     cpOrigen = address.postalCode
+
+                    convertDetailToToString(lat, lng)
 
 
                 }
@@ -165,6 +172,16 @@ class NewTripFragment : BaseFragment() {
         }
 
     }
+
+    private fun convertDetailToToString(lat: Double, lng: Double) {
+        var detalle = Detalle()
+        detalle.origenLatitud = lat
+        detalle.origenLongitud = lng
+        detalle.idMedioTraslado = preferences.get(ID_MEDIO, 0) as Int
+        val gson = Gson()
+        detailString = gson.toJson(detalle)
+    }
+
 
     private fun buildObservers() {
         viewModel.userInfo.observe(requireActivity()) {
@@ -181,6 +198,7 @@ class NewTripFragment : BaseFragment() {
 
     private fun fillData(user: UserEntity) {
         binding.tvWorkCenter.text = user.centroTrabajoAct.toString()
+        preferences.save(DESTINATION, user.centroTrabajoAct.toString())
         codCentroTrabajo = user.codCentroTrabajo!!
     }
 

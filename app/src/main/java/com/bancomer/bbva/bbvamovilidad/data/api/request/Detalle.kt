@@ -1,12 +1,12 @@
 package com.bancomer.bbva.bbvamovilidad.data.api.request
 
 data class Detalle(
-    val fhFinRecorrido: String,
-    val fhIniRecorrido: String,
-    val idMedioTraslado: Int,
-    val kmRecorrido: Int,
-    val origenLatitud: Double,
-    val origenLongitud: Double,
-    val paradaLatitud: Double,
-    val paradaLongitud: Double
+    var fhFinRecorrido: Long? = null,
+    var fhIniRecorrido: Long? = null,
+    var idMedioTraslado: Int? = null,
+    var kmRecorrido: Int? = null,
+    var origenLatitud: Double? = null,
+    var origenLongitud: Double? = null,
+    var paradaLatitud: Double? = null,
+    var paradaLongitud: Double? = null
 )

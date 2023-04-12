@@ -53,12 +53,7 @@ class UserViewModel @Inject constructor(
         handleResponseStatus(repository.updateUserAcceptTerm(userM))
     }
 
-    private fun registerList() {
-        viewModelScope.launch {
-            _status.value = ApiResponseStatus.Loading()
-            handleResponseStatus(repository.registerCarbon())
-        }
-    }
+
 
     private fun updateWorkCenter(campus: Int) {
         viewModelScope.launch {

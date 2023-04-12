@@ -15,6 +15,10 @@ object Dictionary {
     const val ID_MEDIO = "ID_MEDIO"
     const val MEDIO_SELECCIONADO = "MEDIO SELECCIONADO"
     const val STRING_CLASS = "STRING_CLASS"
+    const val REQUEST = "request"
+    const val ADDRESS = "address"
+    const val DESTINATION = "destination"
+    const val STRING_DETAIL = "string_detail"
 
     //Servicios
     const val BASE_URL_GATEWAY = "https://dev-bbva-gateway.appspot.com/mov-sostenible/"

@@ -63,8 +63,8 @@ class CatalogRepository @Inject constructor(
     suspend fun registerCarbon(): ApiResponseStatus<Any> =
         makeNetworkcall {
             val detalle = Detalle(
-                "2023-02-23T02:02:01.000Z",
-                "2023-02-23T01:08:01.000Z",
+                1681316670508,
+                1681316670508,
                 1,
                 3,
                 19.4981495,
@@ -79,14 +79,13 @@ class CatalogRepository @Inject constructor(
                 29803,
                 "55000",
                 ggg,
-                "victorhugo.santillan.contractor@dev.bbva.com",
+                "XMF0673",
             )
 
             val jsonStirng = Gson().toJson(carbonPrintRequest)
             Log.d(TAG, jsonStirng)
 
             val listRegistro = retrofitService.registerCarbonPrint(carbonPrintRequest)
-            carbonPrintRequest
 
         }
 

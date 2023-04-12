@@ -48,24 +48,24 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tvEndTrip"
             style="@style/NormalTextLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Camino a: "
+            tools:text="Camino a: "
             app:layout_constraintBottom_toBottomOf="@+id/imageView13"
             app:layout_constraintStart_toEndOf="@+id/imageView13"
             app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/tvStartTrip"
             style="@style/NormalTextLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Inicio: "
             app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/tvEndTrip"
             app:layout_constraintTop_toTopOf="@+id/imageView10" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,6 +83,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:padding="8dp"
+            android:textColor="@color/black_text"
             android:text="@string/text_current_trip"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +95,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddTransportation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16">
@@ -103,18 +104,18 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnEndTrip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/bbvaCoreBlue"
             android:fontFamily="@font/benton_sans_bbva_bold"
             android:text="@string/end_trip"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddTransportation"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnAddTransportation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
@@ -123,7 +124,7 @@
             android:textColor="@color/bbvaCoreBlue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button2" />
+            app:layout_constraintStart_toEndOf="@+id/btnEndTrip" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
