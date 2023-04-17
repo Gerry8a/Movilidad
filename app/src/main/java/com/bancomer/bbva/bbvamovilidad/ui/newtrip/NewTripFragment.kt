@@ -41,7 +41,6 @@ import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_DETAIL
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
@@ -131,16 +130,18 @@ class NewTripFragment : BaseFragment() {
             LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                getAddress(currentLatLng)
+                val latitude = location.latitude
+                val longitude = location.longitude
+
+                getAddress(latitude, longitude)
             }
         }
     }
 
-    private fun getAddress(currentLatLng: LatLng) {
+    private fun getAddress(lat: Double, lng: Double) {
         val mGeocoder = Geocoder(requireActivity(), Locale.getDefault())
-        val lat = currentLatLng.latitude
-        val lng = currentLatLng.longitude
+        val lat = lat
+        val lng = lng
         lifecycleScope.launch(Dispatchers.Main) {
             try {
                 val addressList: List<Address> =

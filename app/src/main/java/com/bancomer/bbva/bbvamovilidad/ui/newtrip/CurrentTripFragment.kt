@@ -92,7 +92,7 @@ class CurrentTripFragment : BaseFragment() {
         viewModel.sendRequest(carbonPrint)
         viewModel.status.observe(requireActivity()) {
             when (it) {
-                is ApiResponseStatus.Error -> shortToast("Error")
+                is ApiResponseStatus.Error -> shortToast(it.messageID)
                 is ApiResponseStatus.Loading -> shortToast("Cargando")
                 is ApiResponseStatus.Success -> shortToast("Viaje registrado")
             }
