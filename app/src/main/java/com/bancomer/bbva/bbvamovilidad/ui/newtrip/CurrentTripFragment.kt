@@ -1,6 +1,7 @@
 package com.bancomer.bbva.bbvamovilidad.ui.newtrip
 
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +25,6 @@ import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_DETAIL
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -39,8 +39,9 @@ class CurrentTripFragment : BaseFragment() {
     private var requestCarbonPrint: String? = null
     private var detail: String? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private var endingLatitud: Double = 0.0
-    private var endingLongitud: Double = 0.0
+    private var endingLatitude: Double = 0.0
+    private var endingLongitude: Double = 0.0
+    private var startTimestamp: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +56,7 @@ class CurrentTripFragment : BaseFragment() {
 
         initView()
 
+
         arguments?.let {
             requestCarbonPrint = it.getString(REQUEST)
             detail = it.getString(STRING_DETAIL)
@@ -66,59 +68,73 @@ class CurrentTripFragment : BaseFragment() {
         }
     }
 
-    private fun getTimestamp() : Long {
-       return  System.currentTimeMillis()
+    private fun getTimestamp(): Long {
+        return System.currentTimeMillis()
     }
 
-    private fun buildDetail(){
+    private fun buildDetail() {
         val gson = Gson()
         val carbonPrint = gson.fromJson(requestCarbonPrint, CarbonPrintRequest::class.java)
         val detalle = gson.fromJson(detail, Detalle::class.java)
 
         getLatLng()
 
-        detalle.paradaLatitud = endingLatitud
-        detalle.paradaLongitud = endingLongitud
-        detalle.kmRecorrido = 1
-        detalle.fhFinRecorrido = getTimestamp()
+        detalle.paradaLatitud = endingLatitude
+        detalle.paradaLongitud = endingLongitude
+        detalle.kmRecorrido = calculateDistance(detalle)
+        detalle.fhFinRecorrido = startTimestamp
         detalle.fhIniRecorrido = getTimestamp()
 
         val listDetalle = ArrayList<Detalle>()
         listDetalle.add(detalle)
         carbonPrint.detalle = listDetalle
 
-        viewModel.ggg(carbonPrint)
-        viewModel.status.observe(requireActivity()){
-            when(it){
+        viewModel.sendRequest(carbonPrint)
+        viewModel.status.observe(requireActivity()) {
+            when (it) {
                 is ApiResponseStatus.Error -> shortToast("Error")
                 is ApiResponseStatus.Loading -> shortToast("Cargando")
-                is ApiResponseStatus.Success -> shortToast("Success")
+                is ApiResponseStatus.Success -> shortToast("Viaje registrado")
             }
         }
     }
 
+    private fun calculateDistance(detalle: Detalle): Float? {
+        val result = FloatArray(10)
+//        Location.distanceBetween(19.4238981, -99.173498, 19.4666222, -99.129734, result)
+//        Log.d(TAG, "DISTANCIA: ${locationPruba.toString()}")
+        Location.distanceBetween(detalle.origenLatitud!!,detalle.origenLongitud!!,detalle.paradaLatitud!!,detalle.paradaLongitud!!,result)
+
+        val s = String.format("%.1f", result[0] / 1000)
+        shortToast(s)
+        Log.d(TAG, "buildDetail: ${s.toString()}")
+        return result[0] / 1000
+    }
+
     @SuppressLint("MissingPermission")
-    private fun getLatLng(){
+    private fun getLatLng() {
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
-                endingLatitud = location.latitude
-                endingLongitud = location.longitude
+                endingLatitude = location.latitude
+                endingLongitude = location.longitude
             }
         }
     }
 
     private fun initView() {
         setUpToolbar()
+        startTimestamp = getTimestamp()
         binding.tvEndTrip.text = getString(R.string.destination, preferences.get(DESTINATION, ""))
-        binding.tvStartTrip.text = getString(R.string.current_location, preferences.get(ADDRESS, ""))
+        binding.tvStartTrip.text =
+            getString(R.string.current_location, preferences.get(ADDRESS, ""))
 
         val medio = getMedio(preferences.get(STRING_CLASS, "") as String)
 
         val manager = LinearLayoutManager(requireContext())
         listMedio.add(medio)
-        binding.recyclerView.adapter = TransportAdapter(listMedio){}
+        binding.recyclerView.adapter = TransportAdapter(listMedio) {}
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.setHasFixedSize(true)
 

@@ -66,7 +66,7 @@ class CatalogRepository @Inject constructor(
                 1681316670508,
                 1681316670508,
                 1,
-                3,
+                3.0f,
                 19.4981495,
                 -99.2094496,
                 12.4981495,

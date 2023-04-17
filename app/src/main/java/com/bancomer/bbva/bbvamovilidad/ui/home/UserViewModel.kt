@@ -1,5 +1,6 @@
 package com.bancomer.bbva.bbvamovilidad.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.repository.CatalogRepository
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO_ID
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TORRE_BBVA
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TORRE_BBVA_ID
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USERM
@@ -73,7 +75,7 @@ class UserViewModel @Inject constructor(
             repository.getUserInfo(mail).let {
                 when (it) {
                     is ApiResponseStatus.Error -> {
-
+                        Log.d(TAG, "insertUserVIEWMODEL: REGRESA ERROR")
                     }
                     is ApiResponseStatus.Loading -> {
 
@@ -81,6 +83,7 @@ class UserViewModel @Inject constructor(
                     is ApiResponseStatus.Success -> {
                         val response = it.data.data
                         val user = saveUserInfo(response)
+                        Log.d(TAG, "insertUserVIEWMODEL: SE GUARDÓ")
                         repository.insertUser(user)
                     }
                 }

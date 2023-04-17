@@ -1,10 +1,12 @@
 package com.bancomer.bbva.bbvamovilidad.ui.newtrip
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Resources
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +34,7 @@ import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ADDRESS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.DESTINATION
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ID_MEDIO
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PRIVACY_NOTICE
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.REQUEST
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_CLASS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_DETAIL
@@ -153,7 +157,8 @@ class NewTripFragment : BaseFragment() {
                         sb.append(address.premises).append(", ")
 
                     sb.append(address.thoroughfare).append(" ")
-                    sb.append(address.subThoroughfare)
+                    sb.append(address.subThoroughfare).append(", ")
+                    sb.append(address.subLocality)
 
                     val addressString = sb.toString()
 
@@ -226,6 +231,13 @@ class NewTripFragment : BaseFragment() {
         val btnCancelButton = vieww.findViewById<Button>(R.id.btnCancel)
         btnCancelButton.setOnClickListener { dialg.dismiss() }
         val btnCancelIcon = vieww.findViewById<ImageView>(R.id.ibCanel)
+        val tvPrivacy = vieww.findViewById<TextView>(R.id.tvPrivacy)
+
+        tvPrivacy.setOnClickListener {
+            val openURL = Intent(Intent.ACTION_VIEW)
+            openURL.data = Uri.parse(PRIVACY_NOTICE)
+            startActivity(openURL)
+        }
         btnCancelIcon.setOnClickListener {
 //            view?.findNavController()?.navigate(R.id.action_newTripFragment_to_homeFragment)
 //            view?.findNavController()?.previousBackStackEntry

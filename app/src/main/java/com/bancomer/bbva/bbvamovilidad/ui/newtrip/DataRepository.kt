@@ -10,6 +10,6 @@ class DataRepository @Inject constructor() {
 
     suspend fun registerCarbon(request: CarbonPrintRequest): ApiResponseStatus<Any> =
         makeNetworkcall {
-            val listRegistro = retrofitService.registerCarbonPrint(request)
+            retrofitService.registerCarbonPrint(request)
         }
 }

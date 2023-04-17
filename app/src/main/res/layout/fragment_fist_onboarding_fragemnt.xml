@@ -17,6 +17,7 @@
         android:gravity="center"
         android:lines="2"
         android:padding="10dp"
+        android:textAllCaps="true"
         android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="13sp"

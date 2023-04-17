@@ -19,13 +19,13 @@ class DataViewModel @Inject constructor(
     private val _status = MutableLiveData<ApiResponseStatus<Any>>()
     val status: LiveData<ApiResponseStatus<Any>> get() = _status
 
-    fun ggg(request: CarbonPrintRequest) {
+    fun sendRequest(request: CarbonPrintRequest) {
         registerPrint(request)
     }
 
-    private fun registerPrint(carbonPrintRequest: CarbonPrintRequest) = viewModelScope.launch {
+    private fun registerPrint(request: CarbonPrintRequest) = viewModelScope.launch {
         _status.value = ApiResponseStatus.Loading()
-        handleResponseStatus(repository.registerCarbon(carbonPrintRequest))
+        handleResponseStatus(repository.registerCarbon(request))
 
     }
 
