@@ -39,6 +39,8 @@ class ComparativeFragment : BaseFragment() {
         }
         
         viewmodel.getUserInfo("XMF0673")
+
+        viewmodel.registerrrr()
         
         viewmodel.status.observe(requireActivity()){
             when(it){

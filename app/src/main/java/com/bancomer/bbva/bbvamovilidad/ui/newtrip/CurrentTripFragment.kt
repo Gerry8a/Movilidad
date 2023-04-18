@@ -82,8 +82,8 @@ class CurrentTripFragment : BaseFragment() {
         detalle.paradaLatitud = endingLatitude
         detalle.paradaLongitud = endingLongitude
         detalle.kmRecorrido = calculateDistance(detalle)
-        detalle.fhFinRecorrido = startTimestamp
-        detalle.fhIniRecorrido = getTimestamp()
+        detalle.fhFinRecorrido = getTimestamp()
+        detalle.fhIniRecorrido = startTimestamp
 
         val listDetalle = ArrayList<Detalle>()
         listDetalle.add(detalle)
@@ -108,7 +108,7 @@ class CurrentTripFragment : BaseFragment() {
         val s = String.format("%.1f", result[0] / 1000)
         shortToast(s)
         Log.d(TAG, "buildDetail: ${s.toString()}")
-        return result[0] / 1000
+        return 3.4f
     }
 
     @SuppressLint("MissingPermission")

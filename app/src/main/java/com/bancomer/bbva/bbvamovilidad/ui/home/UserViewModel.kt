@@ -43,6 +43,12 @@ class UserViewModel @Inject constructor(
 //        registerList()
     }
 
+    fun registerrrr() = viewModelScope.launch {
+        _status.value = ApiResponseStatus.Loading()
+        handleResponseStatus(repository.registerCarbon())
+
+    }
+
     fun getUserInfoFromDB() = viewModelScope.launch {
         val userData = repository.getUserFromDB()
         if (userData != null) {
