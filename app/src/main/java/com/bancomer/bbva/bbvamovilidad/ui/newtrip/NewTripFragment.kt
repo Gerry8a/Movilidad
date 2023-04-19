@@ -140,8 +140,6 @@ class NewTripFragment : BaseFragment() {
 
     private fun getAddress(lat: Double, lng: Double) {
         val mGeocoder = Geocoder(requireActivity(), Locale.getDefault())
-        val lat = lat
-        val lng = lng
         lifecycleScope.launch(Dispatchers.Main) {
             try {
                 val addressList: List<Address> =

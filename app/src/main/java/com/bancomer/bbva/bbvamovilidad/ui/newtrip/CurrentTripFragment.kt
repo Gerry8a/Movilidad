@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
@@ -27,6 +28,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -56,7 +58,6 @@ class CurrentTripFragment : BaseFragment() {
 
         initView()
 
-
         arguments?.let {
             requestCarbonPrint = it.getString(REQUEST)
             detail = it.getString(STRING_DETAIL)
@@ -65,6 +66,10 @@ class CurrentTripFragment : BaseFragment() {
 
         binding.btnEndTrip.setOnClickListener {
             buildDetail()
+        }
+
+        binding.btnAddTransportation.setOnClickListener {
+//            view.findNavController().navigate(R.id.action_currentTripFragment_to_listMedioFragment)
         }
     }
 
@@ -103,12 +108,16 @@ class CurrentTripFragment : BaseFragment() {
         val result = FloatArray(10)
 //        Location.distanceBetween(19.4238981, -99.173498, 19.4666222, -99.129734, result)
 //        Log.d(TAG, "DISTANCIA: ${locationPruba.toString()}")
-        Location.distanceBetween(detalle.origenLatitud!!,detalle.origenLongitud!!,detalle.paradaLatitud!!,detalle.paradaLongitud!!,result)
+
+        runBlocking {
+            Location.distanceBetween(detalle.origenLatitud!!,detalle.origenLongitud!!,detalle.paradaLatitud!!,detalle.paradaLongitud!!,result)
+        }
+
 
         val s = String.format("%.1f", result[0] / 1000)
         shortToast(s)
         Log.d(TAG, "buildDetail: ${s.toString()}")
-        return 3.4f
+        return result[0] / 1000
     }
 
     @SuppressLint("MissingPermission")
@@ -153,6 +162,11 @@ class CurrentTripFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        callServiceTest("param1", "param2")
     }
 
 
