@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bancomer.bbva.bbvamovilidad.R
@@ -28,6 +29,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,6 +48,7 @@ class CurrentTripFragment : BaseFragment() {
     private var endingLatitude: Double = 0.0
     private var endingLongitude: Double = 0.0
     private var startTimestamp: Long = 0L
+    private var ggg: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,21 +61,38 @@ class CurrentTripFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
+
+
 
         arguments?.let {
             requestCarbonPrint = it.getString(REQUEST)
             detail = it.getString(STRING_DETAIL)
             Log.d(TAG, "onViewCreated: $requestCarbonPrint")
+            val gt: String? = it.getString("TTT")
+            if (gt.isNullOrEmpty()) {
+                Log.d(TAG, "onViewCreated: ES BLANCO")
+            } else {
+                addTransport(gt)
+            }
         }
 
+        initView()
+
         binding.btnEndTrip.setOnClickListener {
-            buildDetail()
+            getLatLng()
         }
 
         binding.btnAddTransportation.setOnClickListener {
-//            view.findNavController().navigate(R.id.action_currentTripFragment_to_listMedioFragment)
+            view.findNavController()
+                .navigate(R.id.action_currentTripFragment_to_addTransportationFragment)
         }
+    }
+
+    private fun addTransport(gt: String) {
+        val ttt = getMedio(gt)
+        listMedio.add(ttt)
+        binding.recyclerView.setHasFixedSize(true)
+        Log.d(TAG, "addTransport: ${listMedio.size}")
     }
 
     private fun getTimestamp(): Long {
@@ -81,8 +103,6 @@ class CurrentTripFragment : BaseFragment() {
         val gson = Gson()
         val carbonPrint = gson.fromJson(requestCarbonPrint, CarbonPrintRequest::class.java)
         val detalle = gson.fromJson(detail, Detalle::class.java)
-
-        getLatLng()
 
         detalle.paradaLatitud = endingLatitude
         detalle.paradaLongitud = endingLongitude
@@ -110,7 +130,13 @@ class CurrentTripFragment : BaseFragment() {
 //        Log.d(TAG, "DISTANCIA: ${locationPruba.toString()}")
 
         runBlocking {
-            Location.distanceBetween(detalle.origenLatitud!!,detalle.origenLongitud!!,detalle.paradaLatitud!!,detalle.paradaLongitud!!,result)
+            Location.distanceBetween(
+                detalle.origenLatitud!!,
+                detalle.origenLongitud!!,
+                detalle.paradaLatitud!!,
+                detalle.paradaLongitud!!,
+                result
+            )
         }
 
 
@@ -122,14 +148,18 @@ class CurrentTripFragment : BaseFragment() {
 
     @SuppressLint("MissingPermission")
     private fun getLatLng() {
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                endingLatitude = location.latitude
-                endingLongitude = location.longitude
+        lifecycleScope.launch(Dispatchers.IO) {
+            fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(requireActivity())
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    endingLatitude = location.latitude
+                    endingLongitude = location.longitude
+                    buildDetail()
+                }
             }
         }
+
     }
 
     private fun initView() {
@@ -147,6 +177,16 @@ class CurrentTripFragment : BaseFragment() {
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.setHasFixedSize(true)
 
+
+        checkNewTransport()
+    }
+
+    private fun checkNewTransport() {
+        if (ggg?.isBlank()!!) {
+            Log.d(TAG, "checkNewTransport: ${ggg.toString()}")
+        } else {
+            Log.d(TAG, "checkNewTransport: Está vacío")
+        }
     }
 
     private fun getMedio(stringClass: String): Medio {
