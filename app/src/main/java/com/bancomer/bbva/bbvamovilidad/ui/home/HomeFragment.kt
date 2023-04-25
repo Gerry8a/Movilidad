@@ -142,6 +142,8 @@ class HomeFragment : Fragment() {
             }
         })
 
+        viewModel.deleteMedios()
+
     }
 
 
@@ -165,6 +167,8 @@ class HomeFragment : Fragment() {
             ).show()
         }
     }
+
+
 
 
 }

@@ -43,6 +43,7 @@ object Dictionary {
     //ROOM TABLES
     const val CAMPUS_TABLE = "campus_table"
     const val USER_TABLE = "user_table"
+    const val MEDIO_TABLE = "medio_table"
     const val USER_DATABASE = "user_database.db"
 
     //USER

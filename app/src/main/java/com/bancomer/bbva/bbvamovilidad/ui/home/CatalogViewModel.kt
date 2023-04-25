@@ -6,15 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.Data
+import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
+import com.bancomer.bbva.bbvamovilidad.data.local.entities.MedioEntity
 import com.bancomer.bbva.bbvamovilidad.model.Movie
 import com.bancomer.bbva.bbvamovilidad.repository.CatalogRepository
+import com.bancomer.bbva.bbvamovilidad.ui.newtrip.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CatalogViewModel @Inject constructor(
-    private val catalogRepository: CatalogRepository
+    private val catalogRepository: CatalogRepository,
+    private val dataRepository: DataRepository
 ) : ViewModel() {
 
 //    private val catalogRepository = CatalogRepository()
@@ -31,8 +35,20 @@ class CatalogViewModel @Inject constructor(
     private val _movie = MutableLiveData<List<Movie>>()
     val movie: LiveData<List<Movie>> get() = _movie
 
+
     init {
 //        downloadMovies()
+    }
+
+    fun insertMedio(medio: Medio) = viewModelScope.launch {
+        val medioEntity = MedioEntity(
+            id = medio.id,
+            asset1x = medio.asset1x,
+            nomMedioTraslado = medio.nomMedioTraslado,
+            numEmisionCo2e = medio.numEmisionCo2e,
+            idSemaforo = medio.idSemaforo,
+        )
+        dataRepository.insertMedio(medioEntity)
     }
 
     fun downloadCatalog(){

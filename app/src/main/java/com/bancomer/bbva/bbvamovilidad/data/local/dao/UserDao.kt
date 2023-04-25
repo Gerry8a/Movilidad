@@ -11,7 +11,7 @@ import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 interface UserDao {
 
     @Query("SELECT * FROM USER_TABLE")
-    suspend fun getUSerInfo(): UserEntity
+    suspend fun getUserInfo(): UserEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(userEntity: UserEntity)

@@ -116,11 +116,13 @@ class NewTripFragment : BaseFragment() {
     }
 
     private fun printMedio() {
+        viewModel.deleteMedios()
         val params = preferences.get(STRING_CLASS, "") as String
         val gson = Gson()
         val medio = gson.fromJson(params, Medio::class.java)
         binding.tvTransportationType.text = medio.nomMedioTraslado
         binding.ivIcon.setImageBitmap(BitmapUtils.stringToBitmap(medio.asset1x))
+        viewModel.saveMedio(medio)
     }
 
     @SuppressLint("MissingPermission")
@@ -184,20 +186,6 @@ class NewTripFragment : BaseFragment() {
         detalle.idMedioTraslado = preferences.get(ID_MEDIO, 0) as Int
         val gson = Gson()
         detailString = gson.toJson(detalle)
-    }
-
-
-    private fun buildObservers() {
-        viewModel.userInfo.observe(requireActivity()) {
-            when (it) {
-                is UIState.Error -> TODO()
-                is UIState.Loading -> {}
-                is UIState.Success -> {
-//                    checkIfUserAccepted(it.data!!)
-                    fillData(it.data!!)
-                }
-            }
-        }
     }
 
     private fun fillData(user: UserEntity) {

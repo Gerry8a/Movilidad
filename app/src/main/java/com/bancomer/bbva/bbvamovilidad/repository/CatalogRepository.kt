@@ -8,7 +8,9 @@ import com.bancomer.bbva.bbvamovilidad.data.api.request.CarbonPrintRequest
 import com.bancomer.bbva.bbvamovilidad.data.api.request.Detalle
 import com.bancomer.bbva.bbvamovilidad.data.api.request.UserUpdateWorkCenter
 import com.bancomer.bbva.bbvamovilidad.data.api.response.*
+import com.bancomer.bbva.bbvamovilidad.data.local.dao.MedioDao
 import com.bancomer.bbva.bbvamovilidad.data.local.dao.UserDao
+import com.bancomer.bbva.bbvamovilidad.data.local.entities.MedioEntity
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.model.Movie
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
@@ -22,7 +24,7 @@ class CatalogRepository @Inject constructor(
 
     suspend fun insertUser(userEntity: UserEntity) = userDao.insertUser(userEntity)
 
-    suspend fun getUserFromDB(): UserEntity = userDao.getUSerInfo()
+    suspend fun getUserFromDB(): UserEntity = userDao.getUserInfo()
 
     suspend fun upDateWorkCenterDB(codWorkCenter: Int, workCenter: String) =
         userDao.updateWorkCenter(codWorkCenter, workCenter)

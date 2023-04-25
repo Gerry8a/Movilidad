@@ -109,6 +109,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/bbvaCoreBlue"
             android:fontFamily="@font/benton_sans_bbva_bold"
+            android:textColor="@color/white"
             android:text="@string/end_trip"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnAddTransportation"

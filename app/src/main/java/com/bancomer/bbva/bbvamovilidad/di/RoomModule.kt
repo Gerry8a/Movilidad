@@ -25,4 +25,10 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideUserDao(db: UserDatabase) = db.getUserDao()
+
+
+
+    @Singleton
+    @Provides
+    fun provideMedioDao(db: UserDatabase) = db.getMediosDao()
 }

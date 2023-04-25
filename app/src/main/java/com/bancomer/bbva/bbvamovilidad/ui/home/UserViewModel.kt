@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.response.DataX
+import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
+import com.bancomer.bbva.bbvamovilidad.data.local.entities.MedioEntity
 import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.repository.CatalogRepository
+import com.bancomer.bbva.bbvamovilidad.ui.newtrip.DataRepository
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.PARQUES_POLANCO_ID
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
@@ -25,6 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val repository: CatalogRepository,
+    private val dataRepository: DataRepository,
     private val preferences: Preferences
 ) : ViewModel() {
 
@@ -41,6 +45,26 @@ class UserViewModel @Inject constructor(
 //        downloadCatalog()
 //        getListUser()
 //        registerList()
+    }
+
+    fun saveMedio(medio: Medio){
+        saveMedioDB(medio)
+    }
+
+    fun deleteMedios() = viewModelScope.launch {
+        dataRepository.deleteMedios()
+    }
+
+
+    private fun saveMedioDB(medio: Medio) = viewModelScope.launch {
+        val medioEntity = MedioEntity(
+            id = medio.id,
+            asset1x = medio.asset1x,
+            idSemaforo = medio.idSemaforo,
+            nomMedioTraslado = medio.nomMedioTraslado,
+            numEmisionCo2e = medio.numEmisionCo2e
+        )
+        dataRepository.insertMedio(medioEntity)
     }
 
     fun registerrrr() = viewModelScope.launch {

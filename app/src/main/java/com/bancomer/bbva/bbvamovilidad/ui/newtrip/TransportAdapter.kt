@@ -2,15 +2,19 @@ package com.bancomer.bbva.bbvamovilidad.ui.newtrip
 
 import android.content.ClipData.Item
 import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.api.response.Medio
+import com.bancomer.bbva.bbvamovilidad.data.local.entities.MedioEntity
 import com.bancomer.bbva.bbvamovilidad.databinding.ItemMedioBinding
 import com.bancomer.bbva.bbvamovilidad.utils.BitmapUtils
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.bumptech.glide.Glide
+import okio.blackholeSink
 
 class TransportAdapter(
     private val medioList: List<Medio>,
