@@ -123,8 +123,6 @@ class CurrentTripFragment : BaseFragment() {
     }
 
     private fun buildDetail() {
-
-
         if (isAdding){
             val requestString = preferences.get("NUEVO_DETALLE", "") as String
             val request = gson.fromJson(requestString, CarbonPrintRequest::class.java)
@@ -135,16 +133,10 @@ class CurrentTripFragment : BaseFragment() {
             request.detalle?.last()?.paradaLatitud = endingLatitude
             request.detalle?.last()?.paradaLongitud = endingLongitude
 
+            sendRequest(request)
 //            print(request.toString())
 
-            viewModel.sendRequest(request)
-            viewModel.status.observe(requireActivity()) {
-                when (it) {
-                    is ApiResponseStatus.Error -> shortToast(it.messageID)
-                    is ApiResponseStatus.Loading -> shortToast("Cargando")
-                    is ApiResponseStatus.Success -> shortToast("Viaje registrado")
-                }
-            }
+
         } else {
             val carbonPrint = gson.fromJson(requestCarbonPrint, CarbonPrintRequest::class.java)
             val detalle = gson.fromJson(detail, Detalle::class.java)
@@ -165,14 +157,7 @@ class CurrentTripFragment : BaseFragment() {
             if (isAdding){
                 buildJson(carbonPrint)
             } else {
-                viewModel.sendRequest(carbonPrint)
-                viewModel.status.observe(requireActivity()) {
-                    when (it) {
-                        is ApiResponseStatus.Error -> shortToast(it.messageID)
-                        is ApiResponseStatus.Loading -> shortToast("Cargando")
-                        is ApiResponseStatus.Success -> shortToast("Viaje registrado")
-                    }
-                }
+                sendRequest(carbonPrint)
             }
         }
 
@@ -180,6 +165,23 @@ class CurrentTripFragment : BaseFragment() {
 
 
 
+    }
+
+    private fun sendRequest(request: CarbonPrintRequest) {
+        viewModel.sendRequest(request)
+        viewModel.status.observe(requireActivity()) {
+            when (it) {
+                is ApiResponseStatus.Error -> {
+                    binding.loading.root.visibility = View.GONE
+                    shortToast(it.messageID)
+                }
+                is ApiResponseStatus.Loading -> binding.loading.root.visibility = View.VISIBLE
+                is ApiResponseStatus.Success -> {
+                    binding.loading.root.visibility = View.GONE
+                    shortToast("Viaje registrado")
+                }
+            }
+        }
     }
 
     private fun calculateDistance(detalle: Detalle): Float? {

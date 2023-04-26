@@ -194,12 +194,6 @@ class NewTripFragment : BaseFragment() {
         codCentroTrabajo = user.codCentroTrabajo!!
     }
 
-    private fun checkIfUserAccepted(it: UserEntity) {
-        if (it.fhAceptaTerminos != null) {
-            showNoticePrivacy()
-        }
-    }
-
     private fun showNoticePrivacy() {
         var fullScreen: Boolean = true
         val dialg = BottomSheetDialog(requireContext())

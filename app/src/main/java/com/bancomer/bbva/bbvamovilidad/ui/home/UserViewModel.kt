@@ -91,7 +91,7 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
             val userEntity = repository.getUserFromDB()
-            userM = "XMF0673"
+
             handleResponseStatus(repository.updateCampus(campus, userM))
         }
     }
@@ -113,7 +113,7 @@ class UserViewModel @Inject constructor(
                     is ApiResponseStatus.Success -> {
                         val response = it.data.data
                         val user = saveUserInfo(response)
-                        Log.d(TAG, "insertUserVIEWMODEL: SE GUARDÓ")
+                        userM = it.data.data.usuariom
                         repository.insertUser(user)
                     }
                 }
