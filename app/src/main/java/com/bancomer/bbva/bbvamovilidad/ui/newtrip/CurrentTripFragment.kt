@@ -25,7 +25,6 @@ import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ADDRESS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.DESTINATION
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.REQUEST
-import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_CLASS
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.STRING_DETAIL
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -51,7 +50,7 @@ class CurrentTripFragment : BaseFragment() {
     private var startTimestamp: Long = 0L
     private var ggg: String? = ""
     private var isAdding = false
-
+    private var gson = Gson()
     private var medioList: MutableList<MedioEntity>? = mutableListOf()
 
     override fun onCreateView(
@@ -69,75 +68,22 @@ class CurrentTripFragment : BaseFragment() {
             requestCarbonPrint = it.getString(REQUEST)
             detail = it.getString(STRING_DETAIL)
             Log.d(TAG, "onViewCreated: $requestCarbonPrint")
-            val gt: String? = it.getString("TTT")
-            if (gt.isNullOrEmpty()) {
-                Log.d(TAG, "onViewCreated: ES BLANCO")
-            } else {
-                addTransport(gt)
-            }
-            val medioAgregado = it.getString("ADDED")
-            if (medioAgregado.isNullOrEmpty()){
-                Log.d(TAG, "agregado?: Sin transporte")
-            } else {
-                llenarAdapter(medioAgregado)
-            }
         }
 
         initView()
+        isAdding = preferences.get("TRANSPORTE_AGREGADO", false) as Boolean
 
         binding.btnEndTrip.setOnClickListener {
-            getLatLng()
+           getLatLng()
         }
 
         binding.btnAddTransportation.setOnClickListener {
-            isAdding = true
-            getLatLng()
+            goToAddFragment()
 
         }
     }
 
-    private fun llenarAdapter(medioAgregado: String) {
-
-        val gson = Gson()
-        val request = gson.fromJson(medioAgregado, CarbonPrintRequest::class.java)
-
-        val mediosss = request.detalle
-
-//        for(detalles in mediosss!!){
-//            listMedio.add()
-//        }
-
-//        val listamedios = getMedio(medioAgregado)
-//        val manager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.adapter = TransportAdapter(listMedio) {}
-//        binding.recyclerView.layoutManager = manager
-//        binding.recyclerView.setHasFixedSize(true)
-    }
-
-    private fun buildJson(ttt: CarbonPrintRequest) {
-        val carbonPrintRequest = CarbonPrintRequest()
-        val gson = Gson()
-        val carbonPrint = gson.toJson(ttt, CarbonPrintRequest::class.java)
-        val bundle = bundleOf("OOO" to carbonPrint)
-        view?.findNavController()
-            ?.navigate(R.id.action_currentTripFragment_to_addTransportationFragment, bundle)
-
-    }
-
-    private fun addTransport(gt: String) {
-        val ttt = getMedio(gt)
-
-        listMedio.add(ttt)
-        binding.recyclerView.setHasFixedSize(true)
-        Log.d(TAG, "addTransport: ${listMedio.size}")
-    }
-
-    private fun getTimestamp(): Long {
-        return System.currentTimeMillis()
-    }
-
-    private fun buildDetail() {
-        val gson = Gson()
+    private fun goToAddFragment() {
         val carbonPrint = gson.fromJson(requestCarbonPrint, CarbonPrintRequest::class.java)
         val detalle = gson.fromJson(detail, Detalle::class.java)
 
@@ -154,10 +100,44 @@ class CurrentTripFragment : BaseFragment() {
         listDetalle.add(detalle)
         carbonPrint.detalle = listDetalle
 
+        val ttt = gson.toJson(carbonPrint, CarbonPrintRequest::class.java)
+        val bundle = bundleOf("OOO" to ttt)
+
+        view?.findNavController()
+            ?.navigate(R.id.action_currentTripFragment_to_addTransportationFragment, bundle)
+    }
+
+    private fun buildJson(ttt: CarbonPrintRequest) {
+        val carbonPrintRequest = CarbonPrintRequest()
+        val gson = Gson()
+        val carbonPrint = gson.toJson(ttt, CarbonPrintRequest::class.java)
+        val bundle = bundleOf("OOO" to carbonPrint)
+        view?.findNavController()
+            ?.navigate(R.id.action_currentTripFragment_to_addTransportationFragment, bundle)
+    }
+
+
+
+    private fun getTimestamp(): Long {
+        return System.currentTimeMillis()
+    }
+
+    private fun buildDetail() {
+
+
         if (isAdding){
-           buildJson(carbonPrint)
-        } else {
-            viewModel.sendRequest(carbonPrint)
+            val requestString = preferences.get("NUEVO_DETALLE", "") as String
+            val request = gson.fromJson(requestString, CarbonPrintRequest::class.java)
+            val lastDetail = request.detalle?.last()
+
+            request.detalle?.last()?.fhFinRecorrido = getTimestamp()
+            request.detalle?.last()?.kmRecorrido = calculateDistance(lastDetail!!)
+            request.detalle?.last()?.paradaLatitud = endingLatitude
+            request.detalle?.last()?.paradaLongitud = endingLongitude
+
+//            print(request.toString())
+
+            viewModel.sendRequest(request)
             viewModel.status.observe(requireActivity()) {
                 when (it) {
                     is ApiResponseStatus.Error -> shortToast(it.messageID)
@@ -165,7 +145,41 @@ class CurrentTripFragment : BaseFragment() {
                     is ApiResponseStatus.Success -> shortToast("Viaje registrado")
                 }
             }
+        } else {
+            val carbonPrint = gson.fromJson(requestCarbonPrint, CarbonPrintRequest::class.java)
+            val detalle = gson.fromJson(detail, Detalle::class.java)
+
+            detalle.paradaLatitud = endingLatitude
+            detalle.paradaLongitud = endingLongitude
+            detalle.kmRecorrido = calculateDistance(detalle)
+            detalle.fhFinRecorrido = getTimestamp()
+            detalle.fhIniRecorrido = startTimestamp
+
+            Log.d(TAG, "FECHA INICIO: ${detalle.fhIniRecorrido}")
+            Log.d(TAG, "FECHA FIN: ${detalle.fhFinRecorrido}")
+
+            val listDetalle = ArrayList<Detalle>()
+            listDetalle.add(detalle)
+            carbonPrint.detalle = listDetalle
+
+            if (isAdding){
+                buildJson(carbonPrint)
+            } else {
+                viewModel.sendRequest(carbonPrint)
+                viewModel.status.observe(requireActivity()) {
+                    when (it) {
+                        is ApiResponseStatus.Error -> shortToast(it.messageID)
+                        is ApiResponseStatus.Loading -> shortToast("Cargando")
+                        is ApiResponseStatus.Success -> shortToast("Viaje registrado")
+                    }
+                }
+            }
         }
+
+
+
+
+
     }
 
     private fun calculateDistance(detalle: Detalle): Float? {
@@ -213,40 +227,8 @@ class CurrentTripFragment : BaseFragment() {
         binding.tvStartTrip.text =
             getString(R.string.current_location, preferences.get(ADDRESS, ""))
 
-        val medio = getMedio(preferences.get(STRING_CLASS, "") as String)
 
         buildObservers()
-
-//        val ggg = Medio(
-//            descSemaforo = "Medio",
-//            hexColor = "#C49735",
-//            id = 1,
-//            idSemaforo = 3,
-//            nomMedioTraslado = "Auto Eléctrico",
-//            numEmisionCo2e = 80.000,
-//            asset1x = "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"
-//        )
-
-//        val ttt = Medio(
-//            descSemaforo = "Medio",
-//            hexColor = "#C49735",
-//            id = 1,
-//            idSemaforo = 3,
-//            nomMedioTraslado = "Auto Eléctrico",
-//            numEmisionCo2e = 80.000,
-//            asset1x = "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"
-//        )
-
-        listMedio.add(medio)
-//        listMedio.add(ggg)
-//        listMedio.add(ttt)
-//        val manager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.adapter = TransportAdapter(listMedio) {}
-//        binding.recyclerView.layoutManager = manager
-//        binding.recyclerView.setHasFixedSize(true)
-
-
-        checkNewTransport()
     }
 
     private fun buildObservers() {
@@ -265,14 +247,6 @@ class CurrentTripFragment : BaseFragment() {
                     }
                 }
             }
-        }
-    }
-
-    private fun checkNewTransport() {
-        if (ggg?.isBlank()!!) {
-            Log.d(TAG, "checkNewTransport: ${ggg.toString()}")
-        } else {
-            Log.d(TAG, "checkNewTransport: Está vacío")
         }
     }
 

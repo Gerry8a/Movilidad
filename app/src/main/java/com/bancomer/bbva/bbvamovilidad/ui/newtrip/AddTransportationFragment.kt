@@ -88,12 +88,6 @@ class AddTransportationFragment : BaseFragment() {
 
     private fun onItemSelected(medio: Medio) {
         getLatLng(medio)
-//        preferences.save(Dictionary.ID_MEDIO, medio.id)
-//        val gson = Gson()
-//        val stringClass = gson.toJson(medio)
-//        val bundle = bundleOf("TTT" to stringClass)
-//        preferences.save(Dictionary.STRING_CLASS, stringClass)
-
     }
 
     @SuppressLint("MissingPermission")
@@ -135,15 +129,15 @@ class AddTransportationFragment : BaseFragment() {
         carbonPrintRequest.detalle = listDetalle
 
         val medioToString = gson.toJson(carbonPrintRequest)
-        val bundle = bundleOf("ADDED" to medioToString)
+        preferences.save("NUEVO_DETALLE", medioToString)
+        preferences.save("TRANSPORTE_AGREGADO", true)
+
         Log.d(TAG, "NUEVO MEDIO: $medioToString")
         view?.findNavController()
-            ?.navigate(R.id.action_addTransportationFragment_to_currentTripFragment, bundle)
+            ?.navigate(R.id.action_addTransportationFragment_to_currentTripFragment)
     }
 
     private fun getTimestamp(): Long? {
         return System.currentTimeMillis()
     }
-
-
 }

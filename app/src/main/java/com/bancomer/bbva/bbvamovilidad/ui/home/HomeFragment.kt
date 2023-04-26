@@ -16,6 +16,7 @@ import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiServiceInterceptor
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentHomeBinding
+import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.bbva.login.ErrorCode
 import com.bbva.login.OAuthManager
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private var observableData = ObservableData()
@@ -143,6 +144,7 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.deleteMedios()
+        preferences.save("TRANSPORTE_AGREGADO", false)
 
     }
 
