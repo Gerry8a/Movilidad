@@ -134,8 +134,6 @@ class CurrentTripFragment : BaseFragment() {
             request.detalle?.last()?.paradaLongitud = endingLongitude
 
             sendRequest(request)
-//            print(request.toString())
-
 
         } else {
             val carbonPrint = gson.fromJson(requestCarbonPrint, CarbonPrintRequest::class.java)
@@ -160,11 +158,6 @@ class CurrentTripFragment : BaseFragment() {
                 sendRequest(carbonPrint)
             }
         }
-
-
-
-
-
     }
 
     private fun sendRequest(request: CarbonPrintRequest) {
@@ -178,7 +171,8 @@ class CurrentTripFragment : BaseFragment() {
                 is ApiResponseStatus.Loading -> binding.loading.root.visibility = View.VISIBLE
                 is ApiResponseStatus.Success -> {
                     binding.loading.root.visibility = View.GONE
-                    shortToast("Viaje registrado")
+                    view?.findNavController()
+                        ?.navigate(R.id.action_currentTripFragment_to_finishedTripFragment)
                 }
             }
         }

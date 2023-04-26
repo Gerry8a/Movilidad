@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_currentTripFragment_to_addTransportationFragment"
             app:destination="@id/addTransportationFragment" />
+        <action
+            android:id="@+id/action_currentTripFragment_to_finishedTripFragment"
+            app:destination="@id/finishedTripFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTransportationFragment"
@@ -81,5 +84,14 @@
         <action
             android:id="@+id/action_addTransportationFragment_to_currentTripFragment"
             app:destination="@id/currentTripFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishedTripFragment"
+        android:name="com.bancomer.bbva.bbvamovilidad.ui.newtrip.FinishedTripFragment"
+        android:label="fragment_finished_trip"
+        tools:layout="@layout/fragment_finished_trip" >
+        <action
+            android:id="@+id/action_finishedTripFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
