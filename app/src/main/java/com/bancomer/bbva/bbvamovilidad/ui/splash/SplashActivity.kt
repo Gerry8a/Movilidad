@@ -18,8 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
 
-    private val viewModel: CatalogViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val screenSplash = installSplashScreen()
@@ -38,7 +36,5 @@ class SplashActivity : BaseActivity() {
             screenSplash.setKeepOnScreenCondition { false }
             finish()
         }
-
-
     }
 }

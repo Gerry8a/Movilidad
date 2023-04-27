@@ -41,6 +41,7 @@ class UserViewModel @Inject constructor(
     private lateinit var userM: String
 
     init {
+        getUserInfoFromDB()
 //        getUserInfoFromDB()
 //        downloadCatalog()
 //        getListUser()
@@ -91,8 +92,7 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
             val userEntity = repository.getUserFromDB()
-
-            handleResponseStatus(repository.updateCampus(campus, userM))
+            handleResponseStatus(repository.updateCampus(campus, userEntity.userm!!))
         }
     }
 
@@ -131,6 +131,9 @@ class UserViewModel @Inject constructor(
         userEntity.codCentroTrabajo = response.codCentroTrabajo
         userEntity.fhAceptaTerminos = response.fhAceptaTerminos
         userEntity.centroTrabajoAct = response.centroTrabajoAct
+        userEntity.puntos = response.puntos
+        userEntity.co2e = response.co2e
+        userEntity.nivel = response.nivelColaborador.nomTitColaborador
         preferences.save(USERM, response.usuariom)
 
         if (response.fhAceptaTerminos != null) {

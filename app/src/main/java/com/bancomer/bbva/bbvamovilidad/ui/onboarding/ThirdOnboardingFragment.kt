@@ -2,7 +2,6 @@ package com.bancomer.bbva.bbvamovilidad.ui.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import com.bancomer.bbva.bbvamovilidad.ui.MainActivity
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ONBOARDING_FINISHED
-import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TRY_AGAIN
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +41,7 @@ class ThirdOnboardingFragment : BaseFragment(), AdapterView.OnItemSelectedListen
         buildObservers()
 
         binding.button.setOnClickListener {
+            callServiceTest("", "")
             viewModel.getWorkCode(workCenter)
         }
     }
@@ -50,24 +50,19 @@ class ThirdOnboardingFragment : BaseFragment(), AdapterView.OnItemSelectedListen
         viewModel.status.observe(requireActivity()){
             when(it){
                 is ApiResponseStatus.Error -> {
-                    binding.pb.visibility = View.GONE
-                    shortToast("No se actualizó")
+                    binding.loading.root.visibility = View.GONE
+                    shortToast(TRY_AGAIN)
                 }
-                is ApiResponseStatus.Loading -> binding.pb.visibility = View.VISIBLE
+                is ApiResponseStatus.Loading -> binding.loading.root.visibility = View.VISIBLE
                 is ApiResponseStatus.Success -> {
-                    binding.pb.visibility = View.GONE
+                    binding.loading.root.visibility = View.GONE
                     preferences.save(ONBOARDING_FINISHED, true)
-                    saveUserPreferences(it.data)
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
                 }
             }
         }
-    }
-
-    private fun saveUserPreferences(data: Any) {
-
     }
 
     private fun initView() {

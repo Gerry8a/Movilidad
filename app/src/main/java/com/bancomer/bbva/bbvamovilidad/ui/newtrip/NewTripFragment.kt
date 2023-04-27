@@ -82,6 +82,7 @@ class NewTripFragment : BaseFragment() {
         }
 
         binding.cvtransportationtype.setOnClickListener {
+            callServiceTest("", "")
             view.findNavController().navigate(R.id.action_newTripFragment_to_listMedioFragment)
         }
 

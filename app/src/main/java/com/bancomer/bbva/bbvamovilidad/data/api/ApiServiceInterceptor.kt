@@ -1,5 +1,6 @@
 package com.bancomer.bbva.bbvamovilidad.data.api
 
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.AUTHORIZATION
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -14,7 +15,6 @@ object ApiServiceInterceptor: Interceptor {
     private fun getAccessToken(sessionToken: String): String? {
         val token = String.format("Bearer $sessionToken")
         return token
-
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -29,6 +29,4 @@ object ApiServiceInterceptor: Interceptor {
             .build()
         return chain.proceed(request)
     }
-
-
 }

@@ -48,14 +48,17 @@ class ListMedioFragment : BaseFragment() {
         viewModel.downloadCatalog()
         viewModel.catalog.observe(requireActivity()) {
             when (it) {
-                is ApiResponseStatus.Error -> shortToast("Errro")
-                is ApiResponseStatus.Loading -> shortToast("Loading")
+                is ApiResponseStatus.Error -> {
+                    binding.loading.root.visibility = View.GONE
+                    shortToast("Error")
+                }
+                is ApiResponseStatus.Loading -> binding.loading.root.visibility = View.VISIBLE
                 is ApiResponseStatus.Success -> {
+                    binding.loading.root.visibility = View.GONE
                     for (medio in it.data.gpoMedioList[0].medios) {
                         fillData(medio)
                     }
                 }
-                else -> {}
             }
         }
     }

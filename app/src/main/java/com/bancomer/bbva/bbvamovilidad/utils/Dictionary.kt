@@ -7,6 +7,16 @@ object Dictionary {
 
     const val MOVIES = "https://api.themoviedb.org/3/"
     const val PRIVACY_NOTICE = "https://www.miportalwiffi.mex.bancomer.com/seguintraW9/dc/pages/avisoPrivacidad/AvisoPrivacidad3.jsp?iv-user=630B42B92ABCF7105A87798D0C018B1A&seguintra_userId=9963385&seguintra_userEm=14&empresa_origen=14&network=wifi"
+    //Strings
+    const val EMPTY_STRING = ""
+    const val TRY_AGAIN = "Intenta de nuevo"
+
+    //Interceptor
+    const val AUTHORIZATION = "Authorization"
+    const val CONTENT_TYPE= "Content-Type"
+    const val APPLICATION_JSON = "application/json"
+
+
 
     //Preferences
     const val ONBOARDING_FINISHED = "ONBOARDING FINISHED"

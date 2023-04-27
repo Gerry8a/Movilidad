@@ -15,6 +15,7 @@ import com.bancomer.bbva.bbvamovilidad.R
 import com.bancomer.bbva.bbvamovilidad.data.UIState
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus
 import com.bancomer.bbva.bbvamovilidad.data.api.ApiServiceInterceptor
+import com.bancomer.bbva.bbvamovilidad.data.local.entities.UserEntity
 import com.bancomer.bbva.bbvamovilidad.databinding.FragmentHomeBinding
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseFragment
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
@@ -24,7 +25,6 @@ import com.google.gson.GsonBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.concurrent.thread
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
@@ -43,69 +43,57 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        ApiServiceInterceptor.("72e2e780397bdc9eedd34c1c78c38ccd")
-//        buildObservers()
         initView()
-
-//        viewModel.movie.observe(requireActivity()) {
-//            binding.tvResult.text = it.title
-//        }
-
-
-//        thread {
-//            val popularMovies =
-//                MovieDBclient.service.listPopularMovies("72e2e780397bdc9eedd34c1c78c38ccd")
-//            val body = popularMovies.execute().body()
-//
-//            if (body != null) {
-//                binding.tvResult.text = body.results.get(0).title
-//                Log.d("GGG", "onViewCreated: ${body.results.get(0).title}")
-//            }
-//        }
     }
 
     private fun initView() {
-        viewModel.getUserInfoFromDB()
+//        viewModel.getUserInfoFromDB()
+        buildObservers()
+    }
+
+    private fun buildObservers() {
+//        viewModel.status.observe(requireActivity()) { status ->
+//            when (status) {
+//                is ApiResponseStatus.Error -> {
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "Error UI",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    binding.pb.visibility = View.GONE
+//                }
+//
+//                is ApiResponseStatus.Loading -> {
+//
+//                    binding.pb.visibility = View.VISIBLE
+//                }
+//                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Success -> {
+//                    Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
+//                    binding.pb.visibility = View.GONE
+//                }
+//            }
+//        }
         viewModel.userInfo.observe(requireActivity()){
             when(it){
                 is UIState.Error -> {}
                 is UIState.Loading -> {}
                 is UIState.Success -> {
-                    binding.tvName.text = getString(R.string.welcome_user, it.data?.nombres)
+                    fillData(it.data!!)
                 }
             }
         }
     }
 
-    private fun buildObservers() {
-        viewModel.status.observe(requireActivity()) { status ->
-            when (status) {
-                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Error -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error UI",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    binding.pb.visibility = View.GONE
-                }
-
-                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Loading -> {
-
-                    binding.pb.visibility = View.VISIBLE
-                }
-                is com.bancomer.bbva.bbvamovilidad.data.api.ApiResponseStatus.Success -> {
-                    Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
-                    binding.pb.visibility = View.GONE
-                }
-            }
-        }
-
+    private fun fillData(user: UserEntity) {
+        binding.tvName.text = getString(R.string.welcome_user, user.nombres)
+        binding.tvTotalPoints.text = user.puntos.toString()
+        binding.tvTotalCo2.text = user.co2e.toString()
+        binding.tvLevelPerson.text = user.nivel
     }
 
     override fun onResume() {
         super.onResume()
+        callServiceTest("", "")
         observableData.setAccesstoken("")
         observableData.setUserLogin("")
         val context: Context = requireContext()
@@ -145,7 +133,6 @@ class HomeFragment : BaseFragment() {
 
         viewModel.deleteMedios()
         preferences.save("TRANSPORTE_AGREGADO", false)
-
     }
 
 

@@ -21,5 +21,11 @@ data class UserEntity(
     @ColumnInfo(name = "fhAceptaTerminos")
     var fhAceptaTerminos: String? = null,
     @ColumnInfo(name = "centroTrabajoAct")
-    var centroTrabajoAct: String? = null
+    var centroTrabajoAct: String? = null,
+    @ColumnInfo(name = "puntos")
+    var puntos: Int? = 0,
+    @ColumnInfo(name = "co2e")
+    var co2e: Double? = 0.0,
+    @ColumnInfo(name = "nivel")
+    var nivel: String? = null
 )

@@ -13,10 +13,9 @@ import com.bancomer.bbva.bbvamovilidad.data.api.response.UserFromAuthResponse
 import com.bancomer.bbva.bbvamovilidad.databinding.ActivityOnboardingBinding
 import com.bancomer.bbva.bbvamovilidad.ui.base.BaseActivity
 import com.bancomer.bbva.bbvamovilidad.ui.home.UserViewModel
-import com.bancomer.bbva.bbvamovilidad.utils.Dictionary
-import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.ACCESS_TOKEN
-import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.USER_EMAIL
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.EMPTY_STRING
+import com.bancomer.bbva.bbvamovilidad.utils.Dictionary.TAG
 import com.bbva.login.EnvironmentType
 import com.bbva.login.ErrorCode
 import com.bbva.login.OAuthManager
@@ -30,7 +29,6 @@ import kotlinx.coroutines.launch
 class OnboardingActivity : BaseActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
-    private lateinit var navController: NavController
     private var observableData = ObservableData()
     private val viewModel: UserViewModel by viewModels()
 
@@ -51,15 +49,14 @@ class OnboardingActivity : BaseActivity() {
         supportActionBar?.hide()
     }
 
-
     override fun onResume() {
         super.onResume()
 
         // OAuth Initial Check
         //------------------------------------------
         // Login al iniciar aplicación
-        observableData.setAccesstoken("")
-        observableData.setUserLogin("")
+        observableData.setAccesstoken(EMPTY_STRING)
+        observableData.setUserLogin(EMPTY_STRING)
         lifecycleScope.launch(Dispatchers.IO) {
             val context: Context = this@OnboardingActivity
             OAuthManager.getInstance().requestAccessToken(context, object :
@@ -91,12 +88,11 @@ class OnboardingActivity : BaseActivity() {
                     OAuthErrorHandler(errorCode, errorMessage)
                     // Actualizar datos Tabs
                     observableData.setAccesstoken("Error OAuth: $errorCode $errorMessage")
-                    observableData.setUserLogin("")
+                    observableData.setUserLogin(EMPTY_STRING)
 //                binding.tvToken.text = errorMessage
                 }
             })
         }
-
     }
 
     private fun saveUserFromAuth(user: String?) {
@@ -125,5 +121,4 @@ class OnboardingActivity : BaseActivity() {
             ).show()
         }
     }
-
 }

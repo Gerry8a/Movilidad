@@ -3,7 +3,7 @@ package com.bancomer.bbva.bbvamovilidad.data.api.response
 data class DataX(
     val centroTrabajo: String,
     val centroTrabajoAct: String,
-    val co2e: Any,
+    val co2e: Double,
     val codCentroTrabajo: Int,
     val codCentroTrabajoAct: Int,
     val fhAceptaTerminos: String,
@@ -26,7 +26,7 @@ data class DataX(
     val nombres: String,
     val perfil: String,
     val primerApellido: String,
-    val puntos: Any,
+    val puntos: Int,
     val segundoApellido: String,
     val usuariom: String
 )
